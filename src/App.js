@@ -5,9 +5,8 @@ import HomeContent from './components/HomeContent';
 import BisectionMethod from './components/BisectionMethod';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { HashRouter } from 'react-router-dom';
 
-const history = createBrowserHistory();
 const { SubMenu } = Menu;
 
 
@@ -19,7 +18,7 @@ class App extends React.Component{
 
   render(){
     return (
-      <Router history={history}>
+      <HashRouter>
         <Layout>
           <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%',paddingLeft:'5px'}}>
             <span style={{color:'white',fontSize:45}}>Numerical Method</span>
@@ -43,7 +42,7 @@ class App extends React.Component{
             </Layout>
           </Layout>
         </Layout>
-      </Router>
+      </HashRouter>
     );
   }
 
