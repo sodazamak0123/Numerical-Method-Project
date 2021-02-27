@@ -26,8 +26,8 @@ class App extends React.Component{
               <SiderNav />
             </Sider>
             <Layout>
-              <Content>Content</Content>
-              <Footer>Footer</Footer>
+              <Content>เนื้อหา</Content>
+              <Footer>ส่วนล่าง</Footer>
             </Layout>
           </Layout>
         </Layout>
