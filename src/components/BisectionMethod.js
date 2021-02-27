@@ -7,7 +7,9 @@ class BisectionMethod extends React.Component{
 
     render(){
         return(
-            <Content>BisectionMethod</Content>
+            <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
+                <h1>Bisection Method</h1>
+            </div>
         );
     }
 

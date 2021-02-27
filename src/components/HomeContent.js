@@ -7,7 +7,9 @@ class HomeContent extends React.Component{
 
     render(){
         return(
-            <Content>HomeContent</Content>
+            <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
+                <h1>Home</h1>
+            </div>
         );
     }
 
