@@ -9,7 +9,7 @@ import { HashRouter } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 
-
+const routerBaseName = process.env.PUBLIC_URL;
 const { Header, Content, Sider } = Layout;
 
 
@@ -18,7 +18,7 @@ class App extends React.Component{
 
   render(){
     return (
-      <HashRouter>
+      <HashRouter basename={routerBaseName}>
         <Layout>
           <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%',paddingLeft:'5px'}}>
             <span style={{color:'white',fontSize:45}}>Numerical Method</span>
