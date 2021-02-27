@@ -18,7 +18,7 @@ class App extends React.Component{
 
   render(){
     return (
-      <HashRouter basename={routerBaseName}>
+      <HashRouter>
         <Layout>
           <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%',paddingLeft:'5px'}}>
             <span style={{color:'white',fontSize:45}}>Numerical Method</span>
