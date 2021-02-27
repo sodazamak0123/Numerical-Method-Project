@@ -34,8 +34,8 @@ class App extends React.Component{
             <Layout className="site-layout" style={{ marginLeft: 200 ,minHeight:'100vh'}}>
               <Header className="site-layout-background" style={{ padding: 0 }} />
               <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                <Route exact path="/" component={HomeContent} />
-                <Route path="/bisectionmethod" component={BisectionMethod} />
+                <Route exact path="/Numerical-Method-Project" component={HomeContent} />
+                <Route path="/Numerical-Method-Project/bisectionmethod" component={BisectionMethod} />
               </Content>
             </Layout>
           </Layout>
