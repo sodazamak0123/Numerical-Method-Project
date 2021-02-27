@@ -1,6 +1,5 @@
 import React from 'react';
 import { Menu } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 
@@ -11,21 +10,21 @@ class SiderNav extends React.Component {
 
   render() {
       return(
-        <Menu
-          onClick={this.handleClick}
-          style={{ width: 256, minHeight:'100vh'}}
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          mode="inline"
-        >
-            <Menu.Item key='Home'>
-                หน้าแรก  
-            </Menu.Item>
-            <SubMenu key="sub1" title="Root of Equations">
-              <Menu.Item key="1">Graphical Method</Menu.Item>
-              <Menu.Item key="2">Intragram</Menu.Item>
-            </SubMenu>
-        </Menu>
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={['1']}
+              style={{ height: '100%', borderRight: 0 }}
+            > 
+
+              <Menu.Item key="1">หน้าแรก</Menu.Item>
+              <SubMenu key="sub1" title="Root of equations">
+                <Menu.Item key="2">Bisection Method</Menu.Item>
+                <Menu.Item key="3">option2</Menu.Item>
+                <Menu.Item key="4">option3</Menu.Item>
+                <Menu.Item key="5">option4</Menu.Item>
+              </SubMenu>
+              
+            </Menu>
       );
   }
 }
