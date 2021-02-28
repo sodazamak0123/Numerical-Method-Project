@@ -4,8 +4,16 @@ import React from 'react';
 import HomeContent from './components/HomeContent';
 import BisectionMethod from './components/BisectionMethod';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { HashRouter } from 'react-router-dom';
+import Onepoint from './components/Onepoint';
+import Falsepositive from './components/Falsepositive';
+import NewtonRaphson from './components/NewtonRaphson';
+import Secant from './components/Secant';
+import CramersRule from './components/CramersRule';
+import GaussEliminationMethod from './components/GaussEliminationMethod';
+import GaussJordanMethod from './components/GaussJordanMethod';
+import LUDecompositionMethod from './components/LUDecompositionMethod';
 
 const { SubMenu } = Menu;
 
@@ -38,6 +46,14 @@ class App extends React.Component{
               <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
                 <Route exact path="/" component={HomeContent} />
                 <Route path="/bisectionmethod" component={BisectionMethod} />
+                <Route path="/onepoint" component={Onepoint} />
+                <Route path="/falsepositive" component={Falsepositive} />
+                <Route path="/newtonraphson" component={NewtonRaphson} />
+                <Route path="/secant" component={Secant} />
+                <Route path="/cramers-rule" component={CramersRule} />
+                <Route path="/gauss-elimination-method" component={GaussEliminationMethod} />
+                <Route path="/gauss-jordan-method" component={GaussJordanMethod} />
+                <Route path="/lu-decomposition-method" component={LUDecompositionMethod} />
               </Content>
             </Layout>
           </Layout>
