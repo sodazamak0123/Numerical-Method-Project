@@ -6,6 +6,12 @@ import './Content.css';
 
 class BisectionMethod extends React.Component{
 
+    constructor(props) 
+        {
+            super();
+            this.equa_input = React.createRef();
+        }
+
     state = {
         f_x:'',
         x:null,
@@ -34,21 +40,20 @@ class BisectionMethod extends React.Component{
     }
 
     find_x = e =>{
-        this.setState({f_x:equa_input.target.value})
+
         let f_x = this.state.f_x;
+        console.log(f_x);
         f_x = f_x.replace("^","**");
         //f_x = f_x.replace(/X/g, '$&x');
-        f_x = f_x.replace("sin","Math.sin");
-        f_x = f_x.replace("cos","Math.cos");
-        f_x = f_x.replace("tan","Math.tan");
+        f_x = f_x.replaceAll("sin","Math.sin");
+        f_x = f_x.replaceAll("cos","Math.cos");
+        f_x = f_x.replaceAll("tan","Math.tan");
         f_x = f_x.replace(/\d(?=x)/g, '$&*');
 
         while (f_x.indexOf("xx") >= 0)
         {
             f_x = f_x.replace("xx", "x*x");
         }
-
-        this.setState({f_x:f_x})
 
         let xl = parseFloat(this.state.xl);
         let xr = parseFloat(this.state.xr);
@@ -90,7 +95,7 @@ class BisectionMethod extends React.Component{
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
                 <h1 className="header-content">Bisection Method</h1>
                 <div> 
-                    <span><Input ref={equa_input} placeholder="x^4-13" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
+                    <span><Input ref={this.equa_input} placeholder="x^4-13" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
                 </div>
                 <div style={{marginTop:'5px'}}>
