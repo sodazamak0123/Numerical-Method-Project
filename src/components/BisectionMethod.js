@@ -1,8 +1,8 @@
 import React from 'react';
-import { Layout } from 'antd';
+import { Input, Button } from 'antd';
 import './Content.css';
 
-const { Content } = Layout;
+
 
 class BisectionMethod extends React.Component{
 
@@ -10,6 +10,10 @@ class BisectionMethod extends React.Component{
         return(
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
                 <h1 className="header-content">Bisection Method</h1>
+                <div> 
+                    <span><Input placeholder="2x^2*5x+3" style={{width:'20%'}}/></span>
+                    <span style={{marginLeft:'10px'}}><Button type="primary">Calculation</Button></span>
+                </div>
             </div>
         );
     }
