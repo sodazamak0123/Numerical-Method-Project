@@ -89,7 +89,7 @@ class BisectionMethod extends React.Component{
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
                 <h1 className="header-content">Bisection Method</h1>
                 <div> 
-                    <span><Input placeholder="2*x^2*5*x+3" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
+                    <span><Input placeholder="x^4-13" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
                 </div>
                 <div style={{marginTop:'5px'}}>
@@ -98,7 +98,7 @@ class BisectionMethod extends React.Component{
                     <span>XR =</span>
                     <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="2" style={{width:'57px'}} onChange={this.myChangeHandler_xr}/></span>
                     <span>Error =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.001" style={{width:'100px'}} onChange={this.myChangeHandler_er}/></span>
+                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00001" style={{width:'100px'}} onChange={this.myChangeHandler_er}/></span>
                 </div>
                 <div style={{marginTop:'20px'}}>
                     Result of x is {this.state.x}
