@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/Numerical-Method-Project/static/css/main.42fbf229.chunk.css",
-    "main.js": "/Numerical-Method-Project/static/js/main.c8d91942.chunk.js",
-    "main.js.map": "/Numerical-Method-Project/static/js/main.c8d91942.chunk.js.map",
-    "runtime-main.js": "/Numerical-Method-Project/static/js/runtime-main.a839c260.js",
-    "runtime-main.js.map": "/Numerical-Method-Project/static/js/runtime-main.a839c260.js.map",
+    "main.js": "/Numerical-Method-Project/static/js/main.ee100a28.chunk.js",
+    "main.js.map": "/Numerical-Method-Project/static/js/main.ee100a28.chunk.js.map",
+    "runtime-main.js": "/Numerical-Method-Project/static/js/runtime-main.253ee5cc.js",
+    "runtime-main.js.map": "/Numerical-Method-Project/static/js/runtime-main.253ee5cc.js.map",
     "static/css/2.1e58ee36.chunk.css": "/Numerical-Method-Project/static/css/2.1e58ee36.chunk.css",
-    "static/js/2.cf99d361.chunk.js": "/Numerical-Method-Project/static/js/2.cf99d361.chunk.js",
-    "static/js/2.cf99d361.chunk.js.map": "/Numerical-Method-Project/static/js/2.cf99d361.chunk.js.map",
-    "static/js/3.36d75b18.chunk.js": "/Numerical-Method-Project/static/js/3.36d75b18.chunk.js",
-    "static/js/3.36d75b18.chunk.js.map": "/Numerical-Method-Project/static/js/3.36d75b18.chunk.js.map",
+    "static/js/2.d6b024a2.chunk.js": "/Numerical-Method-Project/static/js/2.d6b024a2.chunk.js",
+    "static/js/2.d6b024a2.chunk.js.map": "/Numerical-Method-Project/static/js/2.d6b024a2.chunk.js.map",
+    "static/js/3.53fe004b.chunk.js": "/Numerical-Method-Project/static/js/3.53fe004b.chunk.js",
+    "static/js/3.53fe004b.chunk.js.map": "/Numerical-Method-Project/static/js/3.53fe004b.chunk.js.map",
     "index.html": "/Numerical-Method-Project/index.html",
     "static/css/2.1e58ee36.chunk.css.map": "/Numerical-Method-Project/static/css/2.1e58ee36.chunk.css.map",
     "static/css/main.42fbf229.chunk.css.map": "/Numerical-Method-Project/static/css/main.42fbf229.chunk.css.map",
-    "static/js/2.cf99d361.chunk.js.LICENSE.txt": "/Numerical-Method-Project/static/js/2.cf99d361.chunk.js.LICENSE.txt"
+    "static/js/2.d6b024a2.chunk.js.LICENSE.txt": "/Numerical-Method-Project/static/js/2.d6b024a2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.a839c260.js",
+    "static/js/runtime-main.253ee5cc.js",
     "static/css/2.1e58ee36.chunk.css",
-    "static/js/2.cf99d361.chunk.js",
+    "static/js/2.d6b024a2.chunk.js",
     "static/css/main.42fbf229.chunk.css",
-    "static/js/main.c8d91942.chunk.js"
+    "static/js/main.ee100a28.chunk.js"
   ]
 }
