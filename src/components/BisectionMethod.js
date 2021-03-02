@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Button } from 'antd';
 import './Content.css';
-
+import {equation_func, fixed_fx} from './Equation_Function'
 
 
 class BisectionMethod extends React.Component{
@@ -33,34 +33,19 @@ class BisectionMethod extends React.Component{
         this.setState({er: e.target.value});
     }
 
-    equation_func = (x,f_x) => {
-        let temp = eval(f_x)
-        //console.log(this.state.f_x);
-        return temp;
-    }
-
     find_x = e =>{
 
         let f_x = this.state.f_x;
         console.log(f_x);
-        f_x = f_x.replace("^","**");
-        //f_x = f_x.replace(/X/g, '$&x');
-        f_x = f_x.replaceAll("sin","Math.sin");
-        f_x = f_x.replaceAll("cos","Math.cos");
-        f_x = f_x.replaceAll("tan","Math.tan");
-        f_x = f_x.replace(/\d(?=x)/g, '$&*');
 
-        while (f_x.indexOf("xx") >= 0)
-        {
-            f_x = f_x.replace("xx", "x*x");
-        }
+        f_x = fixed_fx(f_x);
 
         let xl = parseFloat(this.state.xl);
         let xr = parseFloat(this.state.xr);
         let er = parseFloat(this.state.er);
 
         let xm = (xl+xr)/2;
-        let num = this.equation_func(xm,f_x)*this.equation_func(xr,f_x);
+        let num = equation_func(xm,f_x)*equation_func(xr,f_x);
 
         let tmp_er = 9999999;
         let new_xm = 0;
@@ -78,7 +63,7 @@ class BisectionMethod extends React.Component{
         while(tmp_er > er){
 
             new_xm = (xl+xr)/2;
-            num = this.equation_func(new_xm,f_x)*this.equation_func(xr,f_x);
+            num = equation_func(new_xm,f_x)*equation_func(xr,f_x);
 
             if(num>0){
                 xr = new_xm;

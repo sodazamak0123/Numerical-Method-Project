@@ -3,7 +3,7 @@ import SiderNav from './SiderNav';
 import React from 'react';
 import HomeContent from './components/HomeContent';
 import BisectionMethod from './components/BisectionMethod';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 import { Route, HashRouter } from "react-router-dom";
 import Onepoint from './components/Onepoint';
 import Falseposition from './components/Falseposition';
@@ -13,8 +13,6 @@ import CramersRule from './components/CramersRule';
 import GaussEliminationMethod from './components/GaussEliminationMethod';
 import GaussJordanMethod from './components/GaussJordanMethod';
 import LUDecompositionMethod from './components/LUDecompositionMethod';
-
-const { SubMenu } = Menu;
 
 const { Header, Content, Sider } = Layout;
 

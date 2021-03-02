@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-
-import HomeContent from './components/HomeContent';
-import BisectionMethod from './components/BisectionMethod';
 
 ReactDOM.render(
   <React.StrictMode>
