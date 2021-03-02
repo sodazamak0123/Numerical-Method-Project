@@ -13,6 +13,7 @@ class Falseposition extends React.Component{
         xl:null,
         xr:null,
         er:null,
+        ifer:null
     };
 
     myChangeHandler_f_x = (e) => {
@@ -30,8 +31,15 @@ class Falseposition extends React.Component{
 
     find_x = e =>{
 
+        if(this.state.f_x==''){
+            this.setState({ifer:(<div style={{color:'red'}}>โปรดใส่ฟังก์ชั่น</div>)})
+            return;
+        }
+
+        try{
+        this.setState({ifer:null})
         let f_x = this.state.f_x;
-        console.log(f_x);
+        //console.log(f_x);
 
         f_x = fixed_fx(f_x);
 
@@ -74,12 +82,18 @@ class Falseposition extends React.Component{
             tmp_er = Math.abs(new_x-x)/new_x;
             x = new_x;
 
-            arr.push(<div style={{fontSize:'25px'}}>Iteration {i}: x is {x} Error : {tmp_er.toFixed(15)}</div>);
+            arr.push(<div style={{fontSize:'25px'}}>
+                        <span style={{display:'inline-block',width:'40%'}}>Iteration {i}: x is {x}</span>
+                        <span>Error : {tmp_er.toFixed(15)}</span>
+                    </div>);
             i++;
 
         }
-        arr.push(<div style={{fontSize:'25px'}}>Result of x is {x}</div>);
+        arr.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x is {x}</div>);
         this.setState({x:arr});
+        } catch(error){
+            this.setState({ifer:(<div style={{color:'red'}}>ใส่ฟังก์ชั่นไม่ถูกต้อง</div>)})
+        }
     };
 
 
@@ -90,6 +104,7 @@ class Falseposition extends React.Component{
                 <div> 
                     <span><Input placeholder="43x-1" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
+                    {this.state.ifer}
                 </div>
                 <div style={{marginTop:'5px'}}>
                     <span>XL =</span>
