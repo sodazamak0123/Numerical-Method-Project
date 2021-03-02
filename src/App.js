@@ -4,10 +4,9 @@ import React from 'react';
 import HomeContent from './components/HomeContent';
 import BisectionMethod from './components/BisectionMethod';
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { Route } from "react-router-dom";
-import { HashRouter } from 'react-router-dom';
+import { Route, HashRouter } from "react-router-dom";
 import Onepoint from './components/Onepoint';
-import Falsepositive from './components/Falsepositive';
+import Falseposition from './components/Falseposition';
 import NewtonRaphson from './components/NewtonRaphson';
 import Secant from './components/Secant';
 import CramersRule from './components/CramersRule';
@@ -17,7 +16,6 @@ import LUDecompositionMethod from './components/LUDecompositionMethod';
 
 const { SubMenu } = Menu;
 
-const routerBaseName = process.env.PUBLIC_URL;
 const { Header, Content, Sider } = Layout;
 
 
@@ -47,7 +45,7 @@ class App extends React.Component{
                 <Route exact path="/" component={HomeContent} />
                 <Route path="/bisectionmethod" component={BisectionMethod} />
                 <Route path="/onepoint" component={Onepoint} />
-                <Route path="/falsepositive" component={Falsepositive} />
+                <Route path="/falseposition" component={Falseposition} />
                 <Route path="/newtonraphson" component={NewtonRaphson} />
                 <Route path="/secant" component={Secant} />
                 <Route path="/cramers-rule" component={CramersRule} />

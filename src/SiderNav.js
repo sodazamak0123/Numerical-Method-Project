@@ -16,7 +16,7 @@ class SiderNav extends React.Component {
               <Menu.Item key="1">หน้าแรก<Link to="/" /></Menu.Item>
               <SubMenu key="sub1" title="Root of equations">
                 <Menu.Item key="2">Bisection Method<Link to="/bisectionmethod" /></Menu.Item>
-                <Menu.Item key="3">Falsepositive Method<Link to="/falsepositive" /></Menu.Item>
+                <Menu.Item key="3">Falseposition Method<Link to="/falseposition" /></Menu.Item>
                 <Menu.Item key="4">Onepoint Method<Link to="/onepoint" /></Menu.Item>
                 <Menu.Item key="5">Newton Raphson<Link to="/newtonraphson" /></Menu.Item>
                 <Menu.Item key="6">Secant<Link to="/secant" /></Menu.Item>

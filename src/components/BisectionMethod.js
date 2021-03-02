@@ -65,6 +65,9 @@ class BisectionMethod extends React.Component{
         let tmp_er = 9999999;
         let new_xm = 0;
 
+        let arr = [];
+        let i =1;
+
         if(num>0){
             xr = xm;
         }
@@ -86,8 +89,13 @@ class BisectionMethod extends React.Component{
 
             tmp_er = Math.abs(new_xm-xm)/new_xm;
             xm = new_xm;
+
+            arr.push(<div style={{fontSize:'25px'}}>Iteration {i}: x is {xm} Error : {tmp_er}</div>);
+            i++;
+
         }
-        this.setState({x:xm});
+        arr.push(<div style={{fontSize:'25px'}}>Result of x is {xm}</div>);
+        this.setState({x:arr});
     };
 
     render(){
@@ -107,7 +115,7 @@ class BisectionMethod extends React.Component{
                     <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00001" style={{width:'100px'}} onChange={this.myChangeHandler_er}/></span>
                 </div>
                 <div style={{marginTop:'20px'}}>
-                    Result of x is {this.state.x}
+                    {this.state.x}
                 </div>
             </div>
         );
