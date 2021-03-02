@@ -6,12 +6,6 @@ import {equation_func, fixed_fx} from './Equation_Function'
 
 class BisectionMethod extends React.Component{
 
-    constructor(props) 
-        {
-            super();
-            this.equa_input = React.createRef();
-        }
-
     state = {
         f_x:'',
         x:null,
@@ -75,7 +69,7 @@ class BisectionMethod extends React.Component{
             tmp_er = Math.abs(new_xm-xm)/new_xm;
             xm = new_xm;
 
-            arr.push(<div style={{fontSize:'25px'}}>Iteration {i}: x is {xm} Error : {tmp_er}</div>);
+            arr.push(<div style={{fontSize:'25px'}}>Iteration {i}: x is {xm} Error : {tmp_er.toFixed(15)}</div>);
             i++;
 
         }
@@ -88,7 +82,7 @@ class BisectionMethod extends React.Component{
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
                 <h1 className="header-content">Bisection Method</h1>
                 <div> 
-                    <span><Input ref={this.equa_input} placeholder="x^4-13" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
+                    <span><Input placeholder="x^4-13" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
                 </div>
                 <div style={{marginTop:'5px'}}>
