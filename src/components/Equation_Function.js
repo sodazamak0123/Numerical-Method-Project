@@ -4,7 +4,7 @@ let equation_func = (x,f_x) => {
 }
 
 let fixed_fx = (f_x) =>{
-    f_x = f_x.replace("^","**");
+    f_x = f_x.replaceAll("^","**");
     //f_x = f_x.replace(/X/g, '$&x');
     f_x = f_x.replaceAll("sin","Math.sin");
     f_x = f_x.replaceAll("cos","Math.cos");
@@ -21,4 +21,3 @@ let fixed_fx = (f_x) =>{
 }
 
 export { equation_func, fixed_fx };
-
