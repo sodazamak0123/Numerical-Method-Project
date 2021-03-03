@@ -71,7 +71,7 @@ class CramersRule extends React.Component{
 
     add_dm = (e) =>{
         let n = this.state.n
-        if(n<5){
+        if(n<8){
             this.setState({n:n+1})
         }
         else{
@@ -91,7 +91,7 @@ class CramersRule extends React.Component{
 
     del_dm = (e) =>{
         let n = this.state.n;
-        if(n>1){
+        if(n>2){
             this.setState({n:n-1})
         }
         else{
@@ -142,7 +142,7 @@ class CramersRule extends React.Component{
         let ans_x = []
         
         for(let i=0;i<n;i++){
-            ans_x.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x{i} is {math.det(x[i]).toFixed(10)/det_A}</div>);
+            ans_x.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x{i+1} is {math.det(x[i]).toFixed(10)/det_A}</div>);
         }
         this.setState({x:ans_x})
         } catch (error){
