@@ -28,7 +28,7 @@ class Onepoint extends React.Component{
 
     find_x = e =>{
 
-        if(this.state.f_x==''){
+        if(this.state.f_x === ''){
             this.setState({ifer:(<div style={{color:'red'}}>โปรดใส่ฟังก์ชั่น</div>)})
             return;
         }
