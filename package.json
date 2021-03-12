@@ -8,6 +8,8 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.3",
     "antd": "^4.12.3",
+    "decimal.js": "^10.2.1",
+    "fraction-calculator": "^1.0.14",
     "mathjs": "^9.2.0",
     "react": "^17.0.1",
     "react-chart": "0.0.1",
