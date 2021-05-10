@@ -13,6 +13,7 @@ import CramersRule from './components/CramersRule';
 import GaussEliminationMethod from './components/GaussEliminationMethod';
 import GaussJordanMethod from './components/GaussJordanMethod';
 import LUDecompositionMethod from './components/LUDecompositionMethod';
+import NewtonDivide from './components/NewtonDivide';
 
 const { Header, Content, Sider } = Layout;
 
@@ -50,6 +51,8 @@ class App extends React.Component{
                 <Route path="/gauss-elimination-method" component={GaussEliminationMethod} />
                 <Route path="/gauss-jordan-method" component={GaussJordanMethod} />
                 <Route path="/lu-decomposition-method" component={LUDecompositionMethod} />
+
+                <Route path="/newton-divide" component={NewtonDivide} />
               </Content>
             </Layout>
           </Layout>

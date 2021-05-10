@@ -54,4 +54,6 @@
 
 .site-layout-background {
   background: #fff;
+  padding: 24px;
+  text-align: left;
 }
