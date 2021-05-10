@@ -1,6 +1,7 @@
 import React from "react"
 import { Button, Input } from "antd"
 import { calInterpolation } from "../containers/calculator"
+import apis from "../containers/API"
 
 class NewtonDivide extends React.Component{
 
@@ -10,6 +11,19 @@ class NewtonDivide extends React.Component{
         selectedPoint : null,
         x : null,
         ans : null,
+        apiData: null,
+    }
+
+    async getData(){
+        let tempData = null
+        await apis.getAllInterpolation().then(res => {tempData = res.data})
+        this.setState({apiData:tempData})
+        this.setState({
+            n: this.state.apiData[0]["n"],
+            matrix : this.state.apiData[0]["matrix"],
+            selectedPoint : this.state.apiData[0]["selectedPoint"],
+            x : this.state.apiData[0]["x"],
+        })
     }
 
     onClickMinus = e =>{
@@ -32,6 +46,10 @@ class NewtonDivide extends React.Component{
                 matrix : tmpMatrix
             })
         } 
+    }
+
+    onClickExample = e =>{
+        this.getData()
     }
 
     onChangeMatrix = e =>{
@@ -114,16 +132,20 @@ class NewtonDivide extends React.Component{
 
                 <div>
                     จุดที่ต้องการใช้คำนวณ
-                    <Input style={{width:'100px',textAlign:'center'}} onChange={this.onChangeSelectedPoint} autoComplete="off" />
+                    <Input style={{width:'100px',textAlign:'center'}} onChange={this.onChangeSelectedPoint} value = {this.state.selectedPoint} autoComplete="off" />
                 </div>
 
                 <div>
                     จุดที่ x ต้องการหาผลลัพธ์
-                    <Input style={{width:'100px',textAlign:'center'}} onChange={this.onChangeX} autoComplete="off" />
+                    <Input style={{width:'100px',textAlign:'center'}} onChange={this.onChangeX} value = {this.state.x} autoComplete="off" />
                 </div>
 
                 <div style={{marginTop:'10px'}}>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickCalculation}>Calculation</Button></span>
+                </div>
+
+                <div style={{marginTop:'10px'}}>
+                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
 
                 <div>
