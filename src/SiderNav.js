@@ -27,6 +27,11 @@ class SiderNav extends React.Component {
                 <Menu.Item key="9">Gauss Jordan Method<Link to="/gauss-jordan-method" /></Menu.Item>
                 <Menu.Item key="10">LU Decomposition Method<Link to="/lu-decomposition-method" /></Menu.Item>
               </SubMenu>
+              <SubMenu key="sub3" title="Interpolation">
+                <Menu.Item key="7">Newton Divide<Link to="/newtom-divide" /></Menu.Item>
+                <Menu.Item key="8">Lagrange<Link to="/lagrange" /></Menu.Item>
+                <Menu.Item key="9">Spline<Link to="/spline" /></Menu.Item>
+              </SubMenu>
 
             </Menu>
       );
