@@ -14,6 +14,7 @@ import GaussEliminationMethod from './components/GaussEliminationMethod';
 import GaussJordanMethod from './components/GaussJordanMethod';
 import LUDecompositionMethod from './components/LUDecompositionMethod';
 import NewtonDivide from './components/NewtonDivide';
+import SwaggerDoc from './containers/SwaggerDoc';
 
 const { Header, Content, Sider } = Layout;
 
@@ -53,6 +54,7 @@ class App extends React.Component{
                 <Route path="/lu-decomposition-method" component={LUDecompositionMethod} />
 
                 <Route path="/newton-divide" component={NewtonDivide} />
+                <Route path="/swagger" component={SwaggerDoc} />
               </Content>
             </Layout>
           </Layout>
