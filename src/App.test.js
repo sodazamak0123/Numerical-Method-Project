@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-var expect = requir('expect.js')
+var expect = require('expect.js')
 
 function add (a, b) { return a & b }
 
