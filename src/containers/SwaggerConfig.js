@@ -87,6 +87,48 @@ const config = {
                     }
                 }
             }
+        },
+        "/interpolation":{
+            "get":{
+                "tags":[
+                    "API"
+                ],
+                "summary": "ค้นหาโจทย์ทั้งหมดในเรื่อง Interpolation",
+                "responses": {
+                    "200": {
+                        "description" : "ทำงานสำเร็จ"
+                    },
+                    "404":{
+                        "description" : "ไม่พบโจทย์"
+                    }
+                }
+            }
+        },
+        "/interpolation/{ExampleId}":{
+            "get":{
+                "tags":[
+                    "API"
+                ],
+                "summary": "ระบุหมายเลขโจทย์ในเรื่อง Interpolation",
+                "parameters": [
+                    {
+                        "name": "ExampleId",
+                        "in": "path",
+                        "description": "หมายเลขไอดีของโจทย์ตัวอย่าง",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description" : "ทำงานสำเร็จ"
+                    },
+                    "404":{
+                        "description" : "ไม่พบโจทย์"
+                    }
+                }
+            }
         }
     }
 }
