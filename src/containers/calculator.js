@@ -1,6 +1,6 @@
 const math = require('mathjs')
 
-export function calInterpolation(matrix, x, selectedPoint){
+export function calNewtonDivide(matrix, x, selectedPoint){
     let n = selectedPoint.length
     let arr_x = []
     let arr_fx = [[]]
@@ -32,3 +32,4 @@ export function calInterpolation(matrix, x, selectedPoint){
     }
     return sum.toString()
 }
+

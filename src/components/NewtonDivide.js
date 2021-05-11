@@ -1,6 +1,6 @@
 import React from "react"
 import { Button, Input } from "antd"
-import { calInterpolation } from "../containers/calculator"
+import { calNewtonDivide } from "../containers/calculator"
 import apis from "../containers/API"
 
 class NewtonDivide extends React.Component{
@@ -88,7 +88,7 @@ class NewtonDivide extends React.Component{
         tmpSelectPoint = tmpSelectPoint.map(x => (+x)-1)
 
         this.setState({
-            ans : calInterpolation(tmpMatrix, +this.state.x, tmpSelectPoint),
+            ans : calNewtonDivide(tmpMatrix, +this.state.x, tmpSelectPoint),
             isCalculate : true
         })
 

@@ -3,7 +3,7 @@ import App from './App';
 
 var expect = require('expect.js')
 
-function add (a, b) { return a & b }
+function add(a, b){ return a & b }
 
 test('renders learn react link', () => {
   render(<App />);
