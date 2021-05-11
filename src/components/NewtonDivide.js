@@ -12,6 +12,7 @@ class NewtonDivide extends React.Component{
         x : null,
         ans : null,
         apiData: null,
+        isCalculate: false
     }
 
     async getData(){
@@ -87,9 +88,10 @@ class NewtonDivide extends React.Component{
         tmpSelectPoint = tmpSelectPoint.map(x => (+x)-1)
 
         this.setState({
-            ans : calInterpolation(tmpMatrix, +this.state.x, tmpSelectPoint)
+            ans : calInterpolation(tmpMatrix, +this.state.x, tmpSelectPoint),
+            isCalculate : true
         })
-        
+
     }
 
     showMatrix(){
@@ -119,7 +121,7 @@ class NewtonDivide extends React.Component{
 
                 {/* เมตริกซ์ใส่ค่าข้อมูล */}
                 <div style={{display:'flex',flexFlow:'row'}}>
-                    <div>X</div>
+                    <div style={{marginRight:'100px'}}>X</div>
                     <div>Y</div>
                 </div>
                 <div style={{display:'flex',flexFlow:'row'}}>
@@ -132,25 +134,26 @@ class NewtonDivide extends React.Component{
 
                 <div>
                     จุดที่ต้องการใช้คำนวณ
-                    <Input style={{width:'100px',textAlign:'center'}} onChange={this.onChangeSelectedPoint} value = {this.state.selectedPoint} autoComplete="off" />
+                    <Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.onChangeSelectedPoint} value = {this.state.selectedPoint} autoComplete="off" />
                 </div>
 
                 <div>
-                    จุดที่ x ต้องการหาผลลัพธ์
-                    <Input style={{width:'100px',textAlign:'center'}} onChange={this.onChangeX} value = {this.state.x} autoComplete="off" />
+                    จุด x ที่ต้องการหาผลลัพธ์
+                    <Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.onChangeX} value = {this.state.x} autoComplete="off" />
                 </div>
 
                 <div style={{marginTop:'10px'}}>
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickCalculation}>Calculation</Button></span>
+                    <span><Button type="primary" onClick={this.onClickCalculation}>Calculation</Button></span>
                 </div>
 
                 <div style={{marginTop:'10px'}}>
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
+                    <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
 
-                <div>
-                    {this.state.ans}
-                </div>
+                {this.state.isCalculate ?
+                    <div style={{marginTop:'10px'}}>f({this.state.x}) = {this.state.ans}</div>
+                    : null
+                }
 
             </div>
         );
