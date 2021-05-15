@@ -30,7 +30,7 @@ class App extends React.Component{
             <span style={{color:'white',fontSize:45}}>Numerical Method</span>
           </Header>
           <Layout>
-            <Sider width={200} className="site-layout-background" style={{
+            <Sider width={300} className="site-layout-background" style={{
             overflow: 'auto',
             height: '100vh',
             marginTop:'64px',
@@ -41,7 +41,7 @@ class App extends React.Component{
             </Sider>
             <Layout className="site-layout" style={{ marginLeft: 200 ,minHeight:'100vh'}}>
               <Header className="site-layout-background" style={{ padding: 0 }} />
-              <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+              <Content style={{ margin: '24px 16px 0px 116px', overflow: 'initial' }}>
                 <Route exact path="/" component={HomeContent} />
                 <Route path="/bisectionmethod" component={BisectionMethod} />
                 <Route path="/onepoint" component={Onepoint} />

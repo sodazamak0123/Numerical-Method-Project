@@ -32,7 +32,7 @@ class SiderNav extends React.Component {
                 <Menu.Item key="12">Lagrange<Link to="/lagrange" /></Menu.Item>
                 <Menu.Item key="13">Spline<Link to="/spline" /></Menu.Item>
               </SubMenu>
-              <SubMenu key="sub3" title="Regression Equation">
+              <SubMenu key="sub4" title="Regression Equation">
                 
               </SubMenu>
 

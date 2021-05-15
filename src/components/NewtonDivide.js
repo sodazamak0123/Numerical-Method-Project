@@ -2,6 +2,7 @@ import React from "react"
 import { Button, Input } from "antd"
 import { calNewtonDivide } from "../containers/calculator"
 import apis from "../containers/API"
+import Desmos from "../containers/Desmos"
 
 class NewtonDivide extends React.Component{
 
@@ -12,7 +13,8 @@ class NewtonDivide extends React.Component{
         x : null,
         ans : null,
         apiData: null,
-        isCalculate: false
+        isCalculate: false,
+        desmosInstance: null
     }
 
     async getData(){
@@ -77,6 +79,9 @@ class NewtonDivide extends React.Component{
 
     onClickCalculation = e =>{
         let tmpMatrix = []
+        let tmpDesmosInstance = this.state.desmosInstance
+        let equation = "f(x)="
+
         for(let i=0;i<this.state.n;i++){
             tmpMatrix.push([])
             for(let j=0;j<2;j++){
@@ -87,9 +92,35 @@ class NewtonDivide extends React.Component{
         let tmpSelectPoint = this.state.selectedPoint.split(",")
         tmpSelectPoint = tmpSelectPoint.map(x => (+x)-1)
 
+        let tmpAns = calNewtonDivide(tmpMatrix, +this.state.x, tmpSelectPoint)
+
+        let pattern = ""
+
+        for(let i=0;i<tmpAns['C'].length;i++){
+            equation = equation + "(" + tmpAns['C'][i] + ")" + pattern
+            if(i < tmpAns['C'].length-1){
+                equation = equation + " + "
+                pattern = pattern + "(x-(" + tmpMatrix[tmpSelectPoint[i]][0] + "))"
+            }
+        }
+
+        let plot = ""
+
+        for(let i=0;i<tmpMatrix.length;i++){
+            plot = plot + "(" + tmpMatrix[i][0] + "," + tmpMatrix[i][1] + ")"
+            if(i < tmpMatrix.length-1){
+                plot = plot + ", "
+            }
+        }
+
+        tmpDesmosInstance.setExpression({ id: 'graph1', latex: equation })
+        tmpDesmosInstance.setExpression({ id: 'graph2', latex: plot , showLabel: true})
+        tmpDesmosInstance.setExpression({ id: 'graph3', latex: "(" + this.state.x + ", f("+this.state.x+"))" , showLabel: true})
+
         this.setState({
-            ans : calNewtonDivide(tmpMatrix, +this.state.x, tmpSelectPoint),
-            isCalculate : true
+            ans : tmpAns,
+            isCalculate : true,
+            desmosInstance : tmpDesmosInstance
         })
 
     }
@@ -104,6 +135,12 @@ class NewtonDivide extends React.Component{
             arr.push(<div style={{margin:'5px'}}></div>)
         }
         return(arr);
+    }
+
+    componentDidMount() {
+        const calculator = Desmos.getDesmosInstance();
+        
+        this.setState({ desmosInstance: calculator });
     }
     
 
@@ -143,17 +180,19 @@ class NewtonDivide extends React.Component{
                 </div>
 
                 <div style={{marginTop:'10px'}}>
-                    <span><Button type="primary" onClick={this.onClickCalculation}>Calculation</Button></span>
-                </div>
-
-                <div style={{marginTop:'10px'}}>
                     <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
 
+                <div style={{marginTop:'10px', marginBottom:'10px'}}>
+                    <span><Button type="primary" onClick={this.onClickCalculation}>Calculation</Button></span>
+                </div>
+
                 {this.state.isCalculate ?
-                    <div style={{marginTop:'10px'}}>f({this.state.x}) = {this.state.ans}</div>
+                    <div style={{marginTop:'10px'}}>f({this.state.x}) = {this.state.ans['ans']}</div>
                     : null
                 }
+
+                <div id="desmos-calculator" style={{ height: "600px" }} />
 
             </div>
         );
