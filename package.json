@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.7.3",
     "antd": "^4.12.3",
     "axios": "^0.21.1",
+    "cubic-spline": "^3.0.3",
     "decimal.js": "^10.2.1",
     "desmos": "^1.5.4",
     "expect.js": "^0.3.1",
