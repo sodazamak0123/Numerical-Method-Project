@@ -1,21 +1,20 @@
 import React from "react"
 import { Button, Input } from "antd"
-import { calRegression } from "../containers/calculator"
+import { calLagrange, calSpline } from "../containers/calculator"
 import apis from "../containers/API"
 import Desmos from "../containers/Desmos"
 
-class Regression extends React.Component{
+class Lagrange extends React.Component{
 
     state = {
         n : 2,
-        m: 1,
-        k: 2,
         matrix : [[],[]],
+        selectedPoint : null,
         x : null,
         ans : null,
         apiData: null,
         isCalculate: false,
-        desmosInstance: null
+        // desmosInstance: null
     }
 
     async getData(){
@@ -26,11 +25,11 @@ class Regression extends React.Component{
             n: this.state.apiData[0]["n"],
             matrix : this.state.apiData[0]["matrix"],
             selectedPoint : this.state.apiData[0]["selectedPoint"],
-            x : ""+this.state.apiData[0]["x"],
+            x : this.state.apiData[0]["x"],
         })
     }
 
-    onClickMinusN = e =>{
+    onClickMinus = e =>{
         if(this.state.n>2){
             let tmpMatrix = this.state.matrix
             tmpMatrix.pop([])
@@ -41,29 +40,13 @@ class Regression extends React.Component{
         }
     }
 
-    onClickPlusN = e =>{
+    onClickPlus = e =>{
         if(this.state.n<8){
             let tmpMatrix = this.state.matrix
             tmpMatrix.push([])
             this.setState({
                 n : this.state.n+1,
                 matrix : tmpMatrix
-            })
-        } 
-    }
-
-    onClickMinusK = e =>{
-        if(this.state.k>1){
-            this.setState({
-                k : this.state.k-1,  
-            })
-        }
-    }
-
-    onClickPlusK = e =>{
-        if(this.state.k<4){
-            this.setState({
-                k : this.state.k+1,
             })
         } 
     }
@@ -80,6 +63,12 @@ class Regression extends React.Component{
             matrix : tmpMatrix
         })
         console.log(this.state.matrix)
+    }
+
+    onChangeSelectedPoint = e =>{
+        this.setState({
+            selectedPoint : e.target.value
+        })
     }
 
     onChangeX = e =>{
@@ -100,63 +89,67 @@ class Regression extends React.Component{
             }
         }
 
-        let tmpMatrixX = this.state.x.split(',')
-
-        for(let i=0;i<this.state.m;i++){
-            tmpMatrixX[i] = +tmpMatrixX[i]
-        }
+        let tmpAns = calSpline(tmpMatrix, +this.state.x)
 
 
-        let tmpAns = calRegression(tmpMatrix, tmpMatrixX, +this.state.k, +this.state.m)
+        // for(let i=0;i<tmpAns['L'].length;i++){
 
-        equation = equation + tmpAns['C'][0] + "+" 
+        //     let up = ""
+        //     let down = ""
+        //     for(let j=0;j<tmpAns['L'].length;j++){
 
-        for(let i=1;i<tmpAns['C'].length;i++){
-            equation = equation + "(" + tmpAns['C'][i] + ")(x^" + i + ")"
-            if(i < tmpAns['C'].length-1){
-                equation = equation + " + "
-            }
-        }
+        //         if(i!==j){
+        //             up = up + "(x-(" + tmpMatrix[tmpSelectPoint[j]][0] + "))"
+        //             down = down + "(" + tmpMatrix[tmpSelectPoint[i]][0] + "-(" + tmpMatrix[tmpSelectPoint[j]][0] + "))"
+        //         }
 
+        //     }
 
-        let plot = ""
+        //     equation = equation + "(" + up + ")/(" + down + ")" + "(" + tmpMatrix[tmpSelectPoint[i]][1] + ")"
+            
+        //     if(i < tmpAns['L'].length-1){
+        //         equation = equation + " + "
+        //     }
+        // }
 
-        for(let i=0;i<tmpMatrix.length;i++){
-            plot = plot + "(" + tmpMatrix[i][0] + "," + tmpMatrix[i][1] + ")"
-            if(i < tmpMatrix.length-1){
-                plot = plot + ", "
-            }
-        }
+        // let plot = ""
 
-        let xMin = tmpMatrix[0][0]
-        let xMax = tmpMatrix[0][0]
-        let yMin = tmpMatrix[0][1]
-        let yMax = tmpMatrix[0][1]
+        // for(let i=0;i<tmpMatrix.length;i++){
+        //     plot = plot + "(" + tmpMatrix[i][0] + "," + tmpMatrix[i][1] + ")"
+        //     if(i < tmpMatrix.length-1){
+        //         plot = plot + ", "
+        //     }
+        // }
 
-        for(let i=1;i<tmpMatrix.length;i++){
-            if(tmpMatrix[i][0] < xMin){
-                xMin = tmpMatrix[i][0]
-            }
-            if(tmpMatrix[i][0] > xMax){
-                xMax = tmpMatrix[i][0]
-            }
-            if(tmpMatrix[i][1] < yMin){
-                yMin = tmpMatrix[i][1]
-            }
-            if(tmpMatrix[i][1] > yMax){
-                yMax = tmpMatrix[i][1]
-            }
-        }
-        
-        tmpDesmosInstance.setExpression({ id: 'graph1', latex: equation })
-        tmpDesmosInstance.setExpression({ id: 'graph2', latex: plot , showLabel: true})
-        tmpDesmosInstance.setExpression({ id: 'graph3', latex: "(" + this.state.x + ", f("+this.state.x+"))" , showLabel: true})
-        tmpDesmosInstance.setMathBounds({ left: xMin,right: xMax, bottom: yMin,top: yMax});
-        
+        // let xMin = tmpMatrix[0][0]
+        // let xMax = tmpMatrix[0][0]
+        // let yMin = tmpMatrix[0][1]
+        // let yMax = tmpMatrix[0][1]
+
+        // for(let i=1;i<tmpMatrix.length;i++){
+        //     if(tmpMatrix[i][0] < xMin){
+        //         xMin = tmpMatrix[i][0]
+        //     }
+        //     if(tmpMatrix[i][0] > xMax){
+        //         xMax = tmpMatrix[i][0]
+        //     }
+        //     if(tmpMatrix[i][1] < yMin){
+        //         yMin = tmpMatrix[i][1]
+        //     }
+        //     if(tmpMatrix[i][1] > yMax){
+        //         yMax = tmpMatrix[i][1]
+        //     }
+        // }
+
+        // tmpDesmosInstance.setExpression({ id: 'graph1', latex: equation })
+        // tmpDesmosInstance.setExpression({ id: 'graph2', latex: plot , showLabel: true})
+        // tmpDesmosInstance.setExpression({ id: 'graph3', latex: "(" + this.state.x + ", f("+this.state.x+"))" , showLabel: true})
+        // tmpDesmosInstance.setMathBounds({ left: xMin,right: xMax, bottom: yMin,top: yMax});
+
         this.setState({
             ans : tmpAns,
             isCalculate : true,
-            desmosInstance : tmpDesmosInstance
+            // desmosInstance : tmpDesmosInstance
         })
 
     }
@@ -173,42 +166,21 @@ class Regression extends React.Component{
         return(arr);
     }
 
-    componentDidMount() {
-        const calculator = Desmos.getDesmosInstance();
-        
-        this.setState({ desmosInstance: calculator });
-
-        const script = document.createElement("script");
-
-        script.src = "https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6";
-        script.async = true;
-
-        document.body.appendChild(script);
-
-    }
+    // componentDidMount() {
+    //     const calculator = Desmos.getDesmosInstance();
+    //     this.setState({ desmosInstance: calculator });
+    // }
     
 
     render(){
         return(
             <div className="site-layout-background">
-                <h1 className="header-content">Regression Equation</h1>
+                <h1 className="header-content">Cubic Spline Interpolation</h1>
 
                 {/* ปุ่ม - + */}
                 <div style={{marginBottom:'10px'}}> 
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickMinusN}>-</Button></span>
-                    <span style={{marginLeft:'10px', fontSize:'20px'}}>จำนวนข้อมูล {this.state.n}</span>
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickPlusN}>+</Button></span>
-                </div>
-
-                <div style={{marginBottom:'10px'}}> 
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickMinusK}>-</Button></span>
-                    <span style={{marginLeft:'10px', fontSize:'20px'}}>ยกกำลัง {this.state.k}</span>
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickPlusK}>+</Button></span>
-                </div>
-
-                <div style={{marginBottom:'10px'}}> 
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickMinus}>-</Button></span>
-                    <span style={{marginLeft:'10px', fontSize:'20px'}}>จำนวนของ x {this.state.m}</span>
+                    <span style={{marginLeft:'10px', fontSize:'20px'}}>{this.state.n}</span>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickPlus}>+</Button></span>
                 </div>
 
@@ -226,6 +198,11 @@ class Regression extends React.Component{
                 </div>
 
                 <div>
+                    จุดที่ต้องการใช้คำนวณ
+                    <Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.onChangeSelectedPoint} value = {this.state.selectedPoint} autoComplete="off" />
+                </div>
+
+                <div>
                     จุด x ที่ต้องการหาผลลัพธ์
                     <Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.onChangeX} value = {this.state.x} autoComplete="off" />
                 </div>
@@ -239,11 +216,11 @@ class Regression extends React.Component{
                 </div>
 
                 {this.state.isCalculate ?
-                    <div style={{marginTop:'10px'}}>f({this.state.x}) = {this.state.ans['ans']}</div>
+                    <div style={{marginTop:'10px'}}>f({this.state.x}) = {this.state.ans}</div>
                     : null
                 }
 
-                <div id="desmos-calculator" style={{ height: "600px" }} />
+                {/* <div id="desmos-calculator" style={{ height: "600px" }} /> */}
 
             </div>
         );
@@ -251,4 +228,4 @@ class Regression extends React.Component{
 
 }
 
-export default Regression
+export default Lagrange

@@ -78,6 +78,24 @@ function sumSingle(arr,x,n,size){
     return sum
 }
 
+export function calSpline(matrix, x){
+
+    let Spline = require('cubic-spline');
+
+    let xs = []
+    let ys = []
+
+    matrix.map((x,i) => {
+        xs.push(x[0])
+        ys.push(x[1])
+    })
+
+    let spline = new Spline(xs, ys);
+
+    return spline.at(+x)
+
+}
+
 
 export function calRegression(matrix, matrixX, k, m){
 

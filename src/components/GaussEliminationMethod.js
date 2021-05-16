@@ -2,6 +2,7 @@ import React from 'react';
 import {Input, Button} from 'antd';
 import './Content.css';
 import {Decimal} from 'decimal.js';
+import apis from "../containers/API"
 
 import { create, all } from 'mathjs'
 
@@ -17,6 +18,22 @@ class GaussEliminationMethod extends React.Component{
         x : null,
         ifer:null,
     }
+
+    async getData(){
+        let tempData = null
+        await apis.getAllMatrix().then(res => {tempData = res.data})
+        this.setState({apiData:tempData})
+        this.setState({
+            n: this.state.apiData[0]["n"],
+            matrix_a : this.state.apiData[0]["matrixA"],
+            matrix_b : this.state.apiData[0]["matrixB"],
+        })
+    }
+
+    onClickExample = e =>{
+        this.getData()
+    }
+
 
 
     input_matrix_A = (e) =>{
@@ -222,8 +239,11 @@ class GaussEliminationMethod extends React.Component{
                     <div style={{alignItems:'center'}}>{this.matrix_B_show()}</div>
                 </div>
                 <div style={{marginTop:'10px'}}>
-                    {this.state.ifer}
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
+                    <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
+                </div>
+
+                <div style={{marginTop:'10px', marginBottom:'10px'}}>
+                    <span><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
                 </div>
                 <div style={{marginTop:'20px'}}>
                     {this.state.x}

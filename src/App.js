@@ -15,6 +15,7 @@ import GaussJordanMethod from './components/GaussJordanMethod';
 import LUDecompositionMethod from './components/LUDecompositionMethod';
 import NewtonDivide from './components/NewtonDivide';
 import Lagrange from './components/Lagrange';
+import Spline from './components/Spline';
 import SwaggerDoc from './containers/SwaggerDoc';
 import Regression from './components/Regression';
 
@@ -57,6 +58,7 @@ class App extends React.Component{
 
                 <Route path="/newton-divide" component={NewtonDivide} />
                 <Route path="/lagrange" component={Lagrange} />
+                <Route path="/spline" component={Spline} />
                 <Route path="/regression" component={Regression} />
                 <Route path="/swagger" component={SwaggerDoc} />
               </Content>
