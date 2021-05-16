@@ -1,10 +1,10 @@
 import React from "react"
 import { Button, Input } from "antd"
-import { calNewtonDivide } from "../containers/calculator"
+import { calLagrange } from "../containers/calculator"
 import apis from "../containers/API"
 import Desmos from "../containers/Desmos"
 
-class NewtonDivide extends React.Component{
+class Lagrange extends React.Component{
 
     state = {
         n : 2,
@@ -92,15 +92,26 @@ class NewtonDivide extends React.Component{
         let tmpSelectPoint = this.state.selectedPoint.split(",")
         tmpSelectPoint = tmpSelectPoint.map(x => (+x)-1)
 
-        let tmpAns = calNewtonDivide(tmpMatrix, +this.state.x, tmpSelectPoint)
+        let tmpAns = calLagrange(tmpMatrix, +this.state.x, tmpSelectPoint)
 
-        let pattern = ""
 
-        for(let i=0;i<tmpAns['C'].length;i++){
-            equation = equation + "(" + tmpAns['C'][i] + ")" + pattern
-            if(i < tmpAns['C'].length-1){
+        for(let i=0;i<tmpAns['L'].length;i++){
+
+            let up = ""
+            let down = ""
+            for(let j=0;j<tmpAns['L'].length;j++){
+
+                if(i!==j){
+                    up = up + "(x-(" + tmpMatrix[tmpSelectPoint[j]][0] + "))"
+                    down = down + "(" + tmpMatrix[tmpSelectPoint[i]][0] + "-(" + tmpMatrix[tmpSelectPoint[j]][0] + "))"
+                }
+
+            }
+
+            equation = equation + "(" + up + ")/(" + down + ")" + "(" + tmpMatrix[tmpSelectPoint[i]][1] + ")"
+            
+            if(i < tmpAns['L'].length-1){
                 equation = equation + " + "
-                pattern = pattern + "(x-(" + tmpMatrix[tmpSelectPoint[i]][0] + "))"
             }
         }
 
@@ -132,12 +143,12 @@ class NewtonDivide extends React.Component{
                 yMax = tmpMatrix[i][1]
             }
         }
-        
+
         tmpDesmosInstance.setExpression({ id: 'graph1', latex: equation })
         tmpDesmosInstance.setExpression({ id: 'graph2', latex: plot , showLabel: true})
         tmpDesmosInstance.setExpression({ id: 'graph3', latex: "(" + this.state.x + ", f("+this.state.x+"))" , showLabel: true})
         tmpDesmosInstance.setMathBounds({ left: xMin,right: xMax, bottom: yMin,top: yMax});
-        
+
         this.setState({
             ans : tmpAns,
             isCalculate : true,
@@ -160,7 +171,6 @@ class NewtonDivide extends React.Component{
 
     componentDidMount() {
         const calculator = Desmos.getDesmosInstance();
-        
         this.setState({ desmosInstance: calculator });
     }
     
@@ -168,7 +178,7 @@ class NewtonDivide extends React.Component{
     render(){
         return(
             <div className="site-layout-background">
-                <h1 className="header-content">Newton Divide</h1>
+                <h1 className="header-content">Lagrange Interpolation</h1>
 
                 {/* ปุ่ม - + */}
                 <div style={{marginBottom:'10px'}}> 
@@ -221,4 +231,4 @@ class NewtonDivide extends React.Component{
 
 }
 
-export default NewtonDivide
+export default Lagrange

@@ -1,4 +1,4 @@
-import Desmos from 'desmos/index';
+const Desmos = require('desmos');
 
 function getDesmosInstance() {
   var elt = document.getElementById("desmos-calculator");
