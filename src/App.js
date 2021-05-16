@@ -19,6 +19,7 @@ import Spline from './components/Spline';
 import SwaggerDoc from './containers/SwaggerDoc';
 import Regression from './components/Regression';
 import ConjugateGradient from './components/ConjugateGradient';
+import Jacobi from './components/Jacobi';
 
 const { Header, Content, Sider } = Layout;
 
@@ -57,7 +58,7 @@ class App extends React.Component{
                 <Route path="/gauss-jordan-method" component={GaussJordanMethod} />
                 <Route path="/lu-decomposition-method" component={LUDecompositionMethod} />
                 <Route path="/conjugate-gradient" component={ConjugateGradient} />
-
+                <Route path="/jacobi" component={Jacobi} />
                 <Route path="/newton-divide" component={NewtonDivide} />
                 <Route path="/lagrange" component={Lagrange} />
                 <Route path="/spline" component={Spline} />
