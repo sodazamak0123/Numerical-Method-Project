@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Button } from 'antd';
 import './Content.css';
 import {equation_func, fixed_fx} from './Equation_Function'
-
+import apis from "../containers/API"
 
 class BisectionMethod extends React.Component{
 
@@ -14,6 +14,22 @@ class BisectionMethod extends React.Component{
         er:null,
         ifer:null
     };
+
+    async getData(){
+        let tempData = null
+        await apis.getAllRootOfEquation().then(res => {tempData = res.data})
+        this.setState({apiData:tempData})
+        this.setState({
+            f_x: this.state.apiData[0]["equation"],
+            xl : this.state.apiData[0]["xl"],
+            xr : this.state.apiData[0]["xr"],
+            er : this.state.apiData[0]["error"],
+        })
+    }
+
+    onClickExample = e =>{
+        this.getData()
+    }
 
     myChangeHandler_f_x = (e) => {
         this.setState({f_x: e.target.value});
@@ -98,17 +114,20 @@ class BisectionMethod extends React.Component{
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
                 <h1 className="header-content">Bisection Method</h1>
                 <div> 
-                    <span><Input placeholder="x^4-13" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
+                    <span><Input placeholder="x^4-13" style={{width:'364px'}} onChange={this.myChangeHandler_f_x} value = {this.state.f_x}/></span>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
                     {this.state.ifer}
                 </div>
                 <div style={{marginTop:'5px'}}>
                     <span>XL =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="1.5" style={{width:'57px'}} onChange={this.myChangeHandler_xl}/></span>
+                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="1.5" style={{width:'57px'}} onChange={this.myChangeHandler_xl} value = {this.state.xl}/></span>
                     <span>XR =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="2" style={{width:'57px'}} onChange={this.myChangeHandler_xr}/></span>
+                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="2" style={{width:'57px'}} onChange={this.myChangeHandler_xr} value = {this.state.xr}/></span>
                     <span>Error =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00001" style={{width:'100px'}} onChange={this.myChangeHandler_er}/></span>
+                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00001" style={{width:'100px'}} onChange={this.myChangeHandler_er} value = {this.state.er}/></span>
+                </div>
+                <div style={{marginTop:'10px'}}>
+                    <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
                 <div style={{marginTop:'20px'}}>
                     {this.state.x}
