@@ -42,6 +42,7 @@ class Onepoint extends React.Component{
     }
 
     find_x = e =>{
+        
         const math = require('mathjs')
         let fx = math.parse(this.state.f_x).compile()
         let x = math.bignumber(this.state.init_x)
