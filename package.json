@@ -15,6 +15,7 @@
     "expect.js": "^0.3.1",
     "fraction-calculator": "^1.0.14",
     "mathjs": "^9.2.0",
+    "patch-package": "^6.4.7",
     "react": "^17.0.1",
     "react-chart": "0.0.1",
     "react-dom": "^17.0.1",
@@ -25,6 +26,7 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
+    "postinstall": "patch-package",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
