@@ -1,7 +1,6 @@
 import React from 'react';
 import { Input, Button } from 'antd';
 import './Content.css';
-import {equation_func, fixed_fx} from './Equation_Function'
 import apis from "../containers/API"
 
 class Onepoint extends React.Component{

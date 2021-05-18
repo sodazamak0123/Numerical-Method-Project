@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, Button } from 'antd';
 import './Content.css';
 import {equation_func, fixed_fx} from './Equation_Function'
+import apis from "../containers/API"
 import { create, all } from 'mathjs'
 
 const config = { }
@@ -16,6 +17,21 @@ class NewtonRaphson extends React.Component{
         er:null,
         ifer:null
     };
+
+    async getData(){
+        let tempData = null
+        await apis.getAllRootOfEquation().then(res => {tempData = res.data})
+        this.setState({apiData:tempData})
+        this.setState({
+            f_x: this.state.apiData[3]["equation"],
+            init_x : this.state.apiData[3]["initial_x"],
+            er : this.state.apiData[3]["error"],
+        })
+    }
+
+    onClickExample = e =>{
+        this.getData()
+    }
 
     myChangeHandler_f_x = (e) => {
         this.setState({f_x: e.target.value});
@@ -90,15 +106,18 @@ class NewtonRaphson extends React.Component{
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
                 <h1 className="header-content">NewtonRaphson Method</h1>
                 <div> 
-                    <span><Input placeholder="x^2 - 7" style={{width:'364px'}} onChange={this.myChangeHandler_f_x}/></span>
+                    <span><Input placeholder="x^2 - 7" style={{width:'364px'}} onChange={this.myChangeHandler_f_x} value={this.state.f_x}/></span>
                     <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
                     {this.state.ifer}
                 </div>
                 <div style={{marginTop:'5px'}}>
                     <span>Initial x =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00" style={{width:'100px'}} onChange={this.myChangeHandler_init_x}/></span>
+                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00" style={{width:'100px'}} onChange={this.myChangeHandler_init_x} value={this.state.init_x}/></span>
                     <span>Error =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00001" style={{width:'100px'}} onChange={this.myChangeHandler_er}/></span>
+                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00001" style={{width:'100px'}} onChange={this.myChangeHandler_er} value={this.state.er}/></span>
+                </div>
+                <div style={{marginTop:'10px'}}>
+                    <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
                 <div style={{marginTop:'20px'}}>
                     {this.state.x}
