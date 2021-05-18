@@ -61,7 +61,7 @@ class Regression extends React.Component{
     }
 
     onClickPlusK = e =>{
-        if(this.state.k<4){
+        if(this.state.k<7){
             this.setState({
                 k : this.state.k+1,
             })
@@ -86,6 +86,17 @@ class Regression extends React.Component{
         this.setState({
             x : e.target.value
         })
+    }
+    
+    findE(text){
+        if(text.includes('e')){
+            let superScript = text.split('e')
+            return superScript[0]+"*10^{"+superScript[1]+"}"
+        }
+        else{
+           return text 
+        }
+        
     }
 
     onClickCalculation = e =>{
@@ -112,7 +123,7 @@ class Regression extends React.Component{
         equation = equation + tmpAns['C'][0] + "+" 
 
         for(let i=1;i<tmpAns['C'].length;i++){
-            equation = equation + "(" + tmpAns['C'][i] + ")(x^" + i + ")"
+            equation = equation + "(" + this.findE(tmpAns['C'][i]) + ")(x^{" + i + "})"
             if(i < tmpAns['C'].length-1){
                 equation = equation + " + "
             }

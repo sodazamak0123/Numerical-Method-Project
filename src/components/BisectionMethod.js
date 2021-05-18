@@ -3,6 +3,9 @@ import { Input, Button } from 'antd';
 import './Content.css';
 import {equation_func, fixed_fx} from './Equation_Function'
 import apis from "../containers/API"
+import Desmos from "../containers/Desmos"
+import DESMOS from 'desmos'
+import math2latex from 'asciimath-to-latex'
 
 class BisectionMethod extends React.Component{
 
@@ -12,7 +15,9 @@ class BisectionMethod extends React.Component{
         xl:null,
         xr:null,
         er:null,
-        ifer:null
+        ifer:null,
+        isCal:false,
+        desmosInstance:null
     };
 
     async getData(){
@@ -44,70 +49,119 @@ class BisectionMethod extends React.Component{
         this.setState({er: e.target.value});
     }
 
-    find_x = e =>{
+    find_x = e => {
 
-        if(this.state.f_x === ''){
-            this.setState({ifer:(<div style={{color:'red'}}>โปรดใส่ฟังก์ชั่น</div>)})
+        if (this.state.f_x === '') {
+            this.setState({ ifer: (<div style={{ color: 'red' }}>โปรดใส่ฟังก์ชั่น</div>) })
             return;
         }
 
         try {
-            
-        this.setState({ifer:null})
-        let f_x = this.state.f_x;
-        //console.log(f_x);
 
-        f_x = fixed_fx(f_x);
+            this.setState({ ifer: null })
+            let f_x = this.state.f_x;
+            //console.log(f_x);
 
-        let xl = parseFloat(this.state.xl);
-        let xr = parseFloat(this.state.xr);
-        let er = parseFloat(this.state.er);
+            f_x = fixed_fx(f_x);
 
-        let xm = (xl+xr)/2;
-        let num = equation_func(xm,f_x)*equation_func(xr,f_x);
+            let xl = parseFloat(this.state.xl);
+            let xr = parseFloat(this.state.xr);
+            let er = parseFloat(this.state.er);
 
-        let tmp_er = 9999999;
-        let new_xm = 0;
+            let xm = (xl + xr) / 2;
+            let num = equation_func(xm, f_x) * equation_func(xr, f_x);
 
-        let arr = [];
-        let i =1;
+            let tmp_er = 9999999;
+            let new_xm = 0;
 
-        if(num>0){
-            xr = xm;
-        }
-        else if(num<0){
-            xl = xm;
-        }
+            let arr = [];
+            let i = 1;
 
-        while(tmp_er > er){
+            let valueXL = [xl]
+            let valueXR = [xr]
 
-            new_xm = (xl+xr)/2;
-            num = equation_func(new_xm,f_x)*equation_func(xr,f_x);
-
-            if(num>0){
-                xr = new_xm;
+            if (num > 0) {
+                xr = xm;
+                valueXR.push(xr)
             }
-            else if(num<0){
-                xl = new_xm;
+            else if (num < 0) {
+                xl = xm;
+                valueXL.push(xl)
             }
 
-            tmp_er = Math.abs(new_xm-xm)/new_xm;
-            xm = new_xm;
+            while (tmp_er > er) {
 
-            arr.push(<div style={{fontSize:'25px'}}>
-                <span style={{display:'inline-block',width:'40%'}}>Iteration {i}: x is {xm}</span>
-                <span>Error : {tmp_er.toFixed(15)}</span>
+                new_xm = (xl + xr) / 2;
+                num = equation_func(new_xm, f_x) * equation_func(xr, f_x);
+
+                if (num > 0) {
+                    xr = new_xm;
+                    valueXR.push(xr)
+                }
+                else if (num < 0) {
+                    xl = new_xm;
+                    valueXL.push(xl)
+                }
+
+                tmp_er = Math.abs(new_xm - xm) / new_xm;
+                xm = new_xm;
+
+                arr.push(
+                <div style={{ fontSize: '25px' }}>
+                    <span style={{ display: 'inline-block', width: '40%' }}>Iteration {i}: x is {xm}</span>
+                    <span>Error : {tmp_er.toFixed(15)}</span>
                 </div>);
-            i++;
+                i++;
 
-        }
-        arr.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x is {xm}</div>);
-        this.setState({x:arr});
+            }
+            let tmpInstance = this.state.desmosInstance
+            let tmpEquation = "f(x) = "+this.state.f_x
+            tmpInstance.setExpression({ id: 'graph1', latex: math2latex(tmpEquation) })
+            tmpInstance.setExpression({
+                id: 'plot1',
+                type: 'table',
+                columns: [
+                  {
+                    latex: 'x',
+                    values: valueXL
+                  },
+                  {
+                    latex: 'f(x)',
+                  }
+                ]
+            });
+            tmpInstance.setExpression({
+                id: 'plot2',
+                type: 'table',
+                columns: [
+                  {
+                    latex: 'x',
+                    values: valueXR
+                  },
+                  {
+                    latex: 'f(x)',
+                    color: DESMOS.Colors.RED
+                  }
+                ],
+            });
+            arr.push(<div style={{ fontSize: '40px', fontWeight: 'bold' }}>Result of x is {xm}</div>);
+            this.setState({
+                x: arr,
+                isCal: true,
+                desmosInstance: tmpInstance
+            });
 
         } catch (error) {
-            this.setState({ifer:(<div style={{color:'red'}}>ใส่ฟังก์ชั่นไม่ถูกต้อง</div>)})
+            this.setState({ ifer: (<div style={{ color: 'red' }}>ใส่ฟังก์ชั่นไม่ถูกต้อง</div>) })
         }
     };
+
+    componentDidMount() {
+        const calculator = Desmos.getDesmosInstance();
+        
+        this.setState({ desmosInstance: calculator });
+
+    }
 
     render(){
         return(
@@ -132,6 +186,7 @@ class BisectionMethod extends React.Component{
                 <div style={{marginTop:'20px'}}>
                     {this.state.x}
                 </div>
+                <div id="desmos-calculator" style={{ height: "600px" }} />
             </div>
         );
     }

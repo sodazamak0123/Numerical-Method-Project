@@ -28,16 +28,17 @@ class SiderNav extends React.Component {
                 <Menu.Item key="10">LU Decomposition Method<Link to="/lu-decomposition-method" /></Menu.Item>
                 <Menu.Item key="11">Conjugate Gradient Method<Link to="/conjugate-gradient" /></Menu.Item>
                 <Menu.Item key="12">Jacobi Method<Link to="/jacobi" /></Menu.Item>
+                <Menu.Item key="13">Gauss-Seidel Method<Link to="/gauss-seidel" /></Menu.Item>
               </SubMenu>
               <SubMenu key="sub3" title="Interpolation">
-                <Menu.Item key="13">Newton Divide<Link to="/newton-divide" /></Menu.Item>
-                <Menu.Item key="14">Lagrange<Link to="/lagrange" /></Menu.Item>
-                <Menu.Item key="15">Spline<Link to="/spline" /></Menu.Item>
+                <Menu.Item key="14">Newton Divide<Link to="/newton-divide" /></Menu.Item>
+                <Menu.Item key="15">Lagrange<Link to="/lagrange" /></Menu.Item>
+                <Menu.Item key="16">Spline<Link to="/spline" /></Menu.Item>
               </SubMenu>
               <SubMenu key="sub4" title="Regression Equation">
-                <Menu.Item key="16">Regression<Link to="/regression" /></Menu.Item>
+                <Menu.Item key="17">Regression<Link to="/regression" /></Menu.Item>
               </SubMenu>
-              <Menu.Item key="17">Swagger<Link to="/swagger" /></Menu.Item>
+              <Menu.Item key="18">Swagger<Link to="/swagger" /></Menu.Item>
 
             </Menu>
       );

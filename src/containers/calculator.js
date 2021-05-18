@@ -1,5 +1,7 @@
 const math = require('mathjs')
 
+// export function calBisection(initialEquation, )
+
 export function calNewtonDivide(matrix, x, selectedPoint){
     let n = selectedPoint.length
     let arrX = []
@@ -154,7 +156,7 @@ export function calRegression(matrix, matrixX, k, m){
     }
     
     for(let i=0;i<matrixC.length;i++){
-        matrixC[i] = matrixC[i].toFixed(50)
+        matrixC[i] = matrixC[i].toString()
     }
  
     console.log(matrixC)

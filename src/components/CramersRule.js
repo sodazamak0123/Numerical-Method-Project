@@ -129,38 +129,38 @@ class CramersRule extends React.Component{
     find_x = (e) =>{
 
         try{
-        this.setState({ifer:null})
-        let n = this.state.n;
-        let i_m_a = this.state.matrix_a;
-        let i_m_b = this.state.matrix_b;
+            this.setState({ifer:null})
+            let n = this.state.n;
+            let i_m_a = this.state.matrix_a;
+            let i_m_b = this.state.matrix_b;
 
-        let m_a = []
-        let m_b = [].concat(i_m_b)
+            let m_a = []
+            let m_b = [].concat(i_m_b)
 
-        for(let i=0;i<n;i++){
-            m_a[i] = [].concat(i_m_a[i])
-        }
-
-        let det_A = math.det(m_a)
-        det_A = det_A.toFixed(10)
-        let x = []
-        /*
-        [[[1,2],[1,2]]]
-        
-        */
-        for(let i=0;i<n;i++){
-            x.push([])
-            for(let j=0;j<n;j++){
-                x[i].push([].concat(m_a[j]))
-                x[i][j][i] = m_b[j]
+            for(let i=0;i<n;i++){
+                m_a[i] = [].concat(i_m_a[i])
             }
-        }
-        let ans_x = []
-        
-        for(let i=0;i<n;i++){
-            ans_x.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x{i+1} is {math.det(x[i]).toFixed(10)/det_A}</div>);
-        }
-        this.setState({x:ans_x})
+
+            let det_A = math.det(m_a)
+            det_A = det_A.toFixed(10)
+            let x = []
+            /*
+            [[[1,2],[1,2]]]
+            
+            */
+            for(let i=0;i<n;i++){
+                x.push([])
+                for(let j=0;j<n;j++){
+                    x[i].push([].concat(m_a[j]))
+                    x[i][j][i] = m_b[j]
+                }
+            }
+            let ans_x = []
+            
+            for(let i=0;i<n;i++){
+                ans_x.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x{i+1} is {math.det(x[i]).toFixed(10)/det_A}</div>);
+            }
+            this.setState({x:ans_x})
         } catch (error){
             this.setState({ifer:(<div style={{color:'red'}}>โปรดใส่ข้อมูลให้ครบ</div>)})
         }
