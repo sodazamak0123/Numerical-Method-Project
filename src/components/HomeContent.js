@@ -6,6 +6,10 @@ const { Content } = Layout;
 
 class HomeContent extends React.Component{
 
+    componentWillMount(){
+        this.props.setKeys(['1'])
+    }
+
     render(){
         return(
             <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>

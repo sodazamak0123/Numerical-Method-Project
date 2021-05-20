@@ -1,6 +1,49 @@
 const math = require('mathjs')
 
-// export function calBisection(initialEquation, )
+export function calBisection(initEquation, initXL, initXR, initError){
+
+    let equation = math.parse(initEquation).compile()
+    let xl = math.bignumber(initXL)
+    let xr = math.bignumber(initXR)
+    let error = math.bignumber(initError)
+    let xm = math.divide(math.add(xl, xr), 2)
+    let checkValue = math.multiply(equation.evaluate({ x: xm }), equation.evaluate({ x: xr }))
+    let checkError = math.bignumber(Number.MAX_VALUE)
+    let newXM = 0
+    let data = []
+    let pointXL = [xl.toString()]
+    let pointXR = [xr.toString()]
+
+    if (checkValue > 0) {
+        xr = xm
+        pointXR.push(xr.toString())
+
+    }
+    else if (checkValue < 0) {
+        xl = xm
+        pointXL.push(xl.toString())
+    }
+
+    data.push({x: xm.toString(), error: 1})
+
+    while (math.larger(checkError, error)) {
+        newXM = math.divide(math.add(xl, xr), 2)
+        checkValue = math.multiply(equation.evaluate({ x: newXM }), equation.evaluate({ x: xr }))
+        if (checkValue > 0) {
+            xr = newXM
+            pointXR.push(xr.toString())
+        }
+        else if (checkValue < 0) {
+            xl = newXM
+            pointXL.push(xl.toString())
+        }
+        checkError = math.abs(math.divide(math.subtract(newXM, xm), newXM))
+        xm = newXM
+        data.push({x: math.round(xm,15).toString(), error: checkError.toFixed(15)})
+    }
+    return {data, pointXL, pointXR}
+
+}
 
 export function calNewtonDivide(matrix, x, selectedPoint){
     let n = selectedPoint.length

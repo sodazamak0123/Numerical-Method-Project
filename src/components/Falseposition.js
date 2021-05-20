@@ -112,6 +112,14 @@ class Falseposition extends React.Component{
         }
     };
 
+    // componentWillMount(){
+    //     this.props.setKeys(['3'])
+    // }
+
+    componentDidMount(){
+        this.props.setKeys(['3'])
+    }
+
 
     render(){
         return(

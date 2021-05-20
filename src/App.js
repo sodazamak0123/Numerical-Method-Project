@@ -2,9 +2,9 @@ import './App.css';
 import SiderNav from './SiderNav';
 import React from 'react';
 import HomeContent from './components/HomeContent';
-import BisectionMethod from './components/BisectionMethod';
+import Bisection from './components/Bisection';
 import { Layout } from 'antd';
-import { Route, HashRouter } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import Onepoint from './components/Onepoint';
 import Falseposition from './components/Falseposition';
 import NewtonRaphson from './components/NewtonRaphson';
@@ -24,33 +24,37 @@ import Jacobi from './components/Jacobi';
 const { Header, Content, Sider } = Layout;
 
 
-class App extends React.Component{
+class App extends React.Component {
 
+  state = {
+    selectedKeys: null
+  }
 
-  render(){
+  setKeys = (selectedKeys) => {
+    this.setState({
+      selectedKeys: selectedKeys
+    })
+    // console.log(selectedKeys)
+  }
+
+  render() {
     return (
-      <HashRouter>
+      <BrowserRouter>
         <Layout>
-          <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%',paddingLeft:'5px'}}>
-            <span style={{color:'white',fontSize:45}}>Numerical Method</span>
+          <Header className="header">
+            <span className="header-text">Numerical Method</span>
           </Header>
           <Layout>
-            <Sider width={300} className="site-layout-background" style={{
-            overflow: 'auto',
-            height: '100vh',
-            marginTop:'64px',
-            position: 'fixed',
-            left: 0,
-            }}>
-              <SiderNav />
+            <Sider width={300} className="sider-layout">
+              <SiderNav selectedKeys={this.state.selectedKeys} />
             </Sider>
-            <Layout className="site-layout" style={{ marginLeft: 200 ,minHeight:'100vh'}}>
+            <Layout className="site-layout" style={{ marginLeft: 200, minHeight: '100vh' }}>
               <Header className="site-layout-background" style={{ padding: 0 }} />
-              <Content style={{ margin: '24px 16px 0px 116px', overflow: 'initial' }}>
-                <Route exact path="/" component={HomeContent} />
-                <Route path="/bisectionmethod" component={BisectionMethod} />
+              <Content className="content-layout">
+                <Route exact path="/" render={() => <HomeContent setKeys={this.setKeys} />} />
+                <Route exact path="/Bisection" render={() => <Bisection setKeys={this.setKeys} />} />
+                <Route path="/Falseposition" render={() => <Falseposition setKeys={this.setKeys} />} />
                 <Route path="/onepoint" component={Onepoint} />
-                <Route path="/falseposition" component={Falseposition} />
                 <Route path="/newtonraphson" component={NewtonRaphson} />
                 <Route path="/secant" component={Secant} />
                 <Route path="/cramers-rule" component={CramersRule} />
@@ -68,7 +72,7 @@ class App extends React.Component{
             </Layout>
           </Layout>
         </Layout>
-      </HashRouter>
+      </BrowserRouter>
     );
   }
 

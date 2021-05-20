@@ -9,7 +9,7 @@ class Regression extends React.Component{
     state = {
         n : 2,
         m: 1,
-        k: 2,
+        k: 1,
         matrix : [[],[]],
         x : null,
         ans : null,
@@ -31,18 +31,25 @@ class Regression extends React.Component{
     }
 
     onClickMinusN = e =>{
-        if(this.state.n>2){
+        let n = this.state.n
+        if(n>2){
             let tmpMatrix = this.state.matrix
             tmpMatrix.pop([])
             this.setState({
-                n : this.state.n-1,
+                n : n-1,
                 matrix : tmpMatrix
             })
+            n = n-1
+            if(this.state.k>=n){
+                this.setState({
+                    k: n-1
+                })
+            }
         }
     }
 
     onClickPlusN = e =>{
-        if(this.state.n<8){
+        if(this.state.n<9){
             let tmpMatrix = this.state.matrix
             tmpMatrix.push([])
             this.setState({
@@ -61,7 +68,7 @@ class Regression extends React.Component{
     }
 
     onClickPlusK = e =>{
-        if(this.state.k<7){
+        if(this.state.k<this.state.n-1){
             this.setState({
                 k : this.state.k+1,
             })
