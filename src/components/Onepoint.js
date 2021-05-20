@@ -3,11 +3,10 @@ import { Input, Button, Table } from 'antd';
 import '../App.css';
 import apis from "../containers/API"
 import Desmos from "../containers/Desmos"
-import DESMOS from 'desmos'
 import math2latex from 'asciimath-to-latex'
 import { calOnePoint } from '../containers/calculator'
 
-class Falsepositon extends React.Component{
+class Onepoint extends React.Component{
 
     state = {
         equation:'',
@@ -151,4 +150,4 @@ class Falsepositon extends React.Component{
 
 }
 
-export default  Falsepositon;
+export default  Onepoint;
