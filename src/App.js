@@ -54,7 +54,7 @@ class App extends React.Component {
                 <Route exact path="/" render={() => <HomeContent setKeys={this.setKeys} />} />
                 <Route exact path="/Bisection" render={() => <Bisection setKeys={this.setKeys} />} />
                 <Route path="/Falseposition" render={() => <Falseposition setKeys={this.setKeys} />} />
-                <Route path="/onepoint" component={Onepoint} />
+                <Route path="/Onepoint" render={() => <Onepoint setKeys={this.setKeys} />} />
                 <Route path="/newtonraphson" component={NewtonRaphson} />
                 <Route path="/secant" component={Secant} />
                 <Route path="/cramers-rule" component={CramersRule} />

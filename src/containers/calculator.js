@@ -1,4 +1,6 @@
-const math = require('mathjs')
+const {create, all} = require('mathjs')
+const math = create(all);
+math.config({number: 'BigNumber', precision: 64});
 
 export function calBisection(initEquation, initXL, initXR, initError){
 
@@ -24,7 +26,7 @@ export function calBisection(initEquation, initXL, initXR, initError){
         pointXL.push(xl.toString())
     }
 
-    data.push({x: xm.toString(), error: 1})
+    data.push({x: math.round(xm,15).toString(), error: 1})
 
     while (math.larger(checkError, error)) {
         newXM = math.divide(math.add(xl, xr), 2)
@@ -39,10 +41,94 @@ export function calBisection(initEquation, initXL, initXR, initError){
         }
         checkError = math.abs(math.divide(math.subtract(newXM, xm), newXM))
         xm = newXM
-        data.push({x: math.round(xm,15).toString(), error: checkError.toFixed(15)})
+        data.push({x: math.round(xm,15).toString(), error: math.round(checkError,15).toString()})
     }
     return {data, pointXL, pointXR}
 
+}
+
+export function calFalsePosition(initEquation, initXL, initXR, initError){
+    
+    let equation = math.parse(initEquation).compile()
+    let xl = math.bignumber(initXL)
+    let xr = math.bignumber(initXR)
+    let error = math.bignumber(initError)
+    let equationL = equation.evaluate({x:xl})
+    let equationR = equation.evaluate({x:xr})
+    let x = math.divide(math.subtract(math.multiply(xl, equationR), math.multiply(xr, equationL)), math.subtract(equationR, equationL))
+    let checkValue = math.multiply(equation.evaluate({x:x}), equation.evaluate({x:xr}))
+    let checkError = math.bignumber(Number.MAX_VALUE)
+    let newX = 0
+    let data = []
+    let pointXL = [xl.toString()]
+    let pointXR = [xr.toString()]
+
+    if (checkValue > 0) {
+        xr = x
+        pointXR.push(xr.toString())
+    }
+    else if (checkValue < 0) {
+        xl = x
+        pointXL.push(xl.toString())
+    }
+
+    data.push({x: math.round(x,15).toString(), error: 1})
+
+    while (math.larger(checkError, error)) {
+        equationL = equation.evaluate({x:xl})
+        equationR = equation.evaluate({x:xr})
+
+        newX = math.divide(math.subtract(math.multiply(xl, equationR), math.multiply(xr, equationL)), math.subtract(equationR, equationL))
+        
+        checkValue = math.multiply(equation.evaluate({x:newX}), equationR)
+
+        if(checkValue > 0){
+            xr = newX
+            pointXR.push(xr.toString())
+        }
+        else if (checkValue < 0) {
+            xl = newX
+            pointXL.push(xl.toString())
+        }
+
+        checkError = math.abs(math.divide(math.subtract(newX, x), newX))
+        x = newX
+        data.push({x: math.round(x,15).toString(), error: math.round(checkError,15).toString()})
+    }
+    return {data, pointXL, pointXR}
+}
+
+export function calOnePoint(initEquation, initX, initError){
+    let equation = math.parse(initEquation).compile()
+    let x = math.bignumber(initX)
+    let error = math.bignumber(initError)
+    let checkError = math.bignumber(Number.MAX_VALUE)
+    let newX = x
+    let data = []
+    let pointX = []
+    let pointY = []
+    let iteration = 1
+
+    while (math.larger(checkError, error)) {
+
+        newX = math.bignumber(equation.evaluate({x:math.bignumber(x)}))
+        pointX.push(x.toString())
+        pointY.push(newX.toString())
+        pointX.push(newX.toString())
+        pointY.push(newX.toString())
+        let newCheckError = math.abs(math.divide(math.subtract(newX, x), newX))
+        if(iteration > 500 || (iteration > 5 && math.equal(checkError, 1))){
+            data = []
+            data.push({x: 'ลู่ออก', error: 'ลู่ออก'})
+            break;
+        }
+        checkError = newCheckError
+        x = newX
+        // data.push({key:iteration, iteration:iteration, x:x.toString(), error:checkError.toString()})
+        data.push({x: math.round(x,15).toString(), error: math.round(checkError,15).toString()})
+        iteration = iteration + 1
+    }
+    return {data, pointX, pointY}
 }
 
 export function calNewtonDivide(matrix, x, selectedPoint){

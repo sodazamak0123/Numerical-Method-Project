@@ -1,16 +1,40 @@
 import React from 'react';
-import { Input, Button } from 'antd';
-import './Content.css';
+import { Input, Button, Table } from 'antd';
+import '../App.css';
 import apis from "../containers/API"
+import Desmos from "../containers/Desmos"
+import DESMOS from 'desmos'
+import math2latex from 'asciimath-to-latex'
+import { calOnePoint } from '../containers/calculator'
 
-class Onepoint extends React.Component{
+class Falsepositon extends React.Component{
 
     state = {
-        f_x:'',
-        init_x:null,
-        x:null,
+        equation:'',
+        initX:null,
         er:null,
-        ifer:null
+        isError:null,
+        isCal:false,
+        desmosInstance:null,
+        columns: [
+            {
+                title: 'Iteration',
+                dataIndex: 'iteration',
+                key: 'iteration',
+              },
+              {
+                title: 'X',
+                dataIndex: 'x',
+                key: 'x',
+              },
+              {
+                title: 'Error',
+                dataIndex: 'error',
+                key: 'error',
+              }
+        ],
+        dataSource:[],
+        showDesmos: 'desmos-graph-hide'
     };
 
     async getData(){
@@ -18,8 +42,8 @@ class Onepoint extends React.Component{
         await apis.getAllRootOfEquation().then(res => {tempData = res.data})
         this.setState({apiData:tempData})
         this.setState({
-            f_x: this.state.apiData[2]["equation"],
-            init_x : this.state.apiData[2]["initial_x"],
+            equation: this.state.apiData[2]["equation"],
+            initX : this.state.apiData[2]["initial_x"],
             er : this.state.apiData[2]["error"],
         })
     }
@@ -28,78 +52,103 @@ class Onepoint extends React.Component{
         this.getData()
     }
 
-    myChangeHandler_f_x = (e) => {
-        this.setState({f_x: e.target.value});
+    onChangeEquation = e => {
+        this.setState({equation: e.target.value});
     }
-
-    myChangeHandler_init_x = (e) => {
-        this.setState({init_x: e.target.value});
+    onChangeInitX = e => {
+        this.setState({initX: e.target.value});
     }
-
-    myChangeHandler_er = (e) => {
+    onChangeER = e => {
         this.setState({er: e.target.value});
     }
 
-    find_x = e =>{
-        
-        const math = require('mathjs')
-        let fx = math.parse(this.state.f_x).compile()
-        let x = math.bignumber(this.state.init_x)
-        let error = math.bignumber(this.state.er)
-        let checkError = math.bignumber(Number.MAX_VALUE)
-        let newX = x
-        let arr = []
-        let iteration = 1
+    onClickCalculate = e => {
 
-        while (math.larger(checkError, error)) {
-
-            newX = fx.evaluate({x:x})
-            let newCheckError = math.abs(math.divide(math.subtract(newX, x), newX))
-            if(iteration > 500 || (iteration > 5 && math.equal(checkError, 1))){
-                arr = []
-                arr.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>สมการนี้เป็น ลู่ออก</div>)
-                this.setState({x:arr})
-                return;
-            }
-            checkError = newCheckError
-            console.log(checkError.toString())
-            x = newX
-            arr.push(<div style={{fontSize:'25px'}}>
-                        <span style={{display:'inline-block',width:'40%'}}>Iteration {iteration}: x is {parseFloat(x)}</span>
-                        <span>Error : {checkError.toFixed(15)}</span>
-                    </div>);
-            iteration = iteration + 1
+        if (this.state.equation === '') {
+            this.setState({ isError: (<div className="content-equation-error">โปรดใส่ฟังก์ชั่น</div>) })
+            return;
         }
-        arr.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x is {parseFloat(x)}</div>);
-        this.setState({x:arr});
 
+        // try {
+
+            this.setState({ isError: null })
+            let {data, pointX, pointY} = calOnePoint(this.state.equation, this.state.initX, this.state.er)
+            let arr = []
+            data.map((x, i) => {
+                arr.push({
+                    key: i+1,
+                    iteration: i+1,
+                    x: x['x'],
+                    error: x['error']
+                })
+            })
+
+            let tmpInstance = this.state.desmosInstance
+            let tmpEquation = "f(x) = "+this.state.equation
+            tmpInstance.setExpression({ id: 'graph1', latex: 'y = x' })
+            tmpInstance.setExpression({ id: 'graph2', latex: math2latex(tmpEquation) })
+            tmpInstance.setExpression({
+                id: 'plot1',
+                type: 'table',
+                columns: [
+                  {
+                    latex: 'x',
+                    values: pointX
+                  },
+                  {
+                    latex: 'y',
+                    values: pointY,
+                    lines: true
+                  }
+                ]
+            });
+            this.setState({
+                dataSource: arr,
+                isCal: true,
+                desmosInstance: tmpInstance,
+                showDesmos: 'desmos-graph-show'
+            });
+
+        // } catch (error) {
+        //     this.setState({ isError: (<div className="content-equation-error">ใส่ฟังก์ชั่นไม่ถูกต้อง</div>) })
+        // }
+    };
+
+    componentDidMount() {
+        this.props.setKeys(['4'])
+        const calculator = Desmos.getDesmosInstance();
+        this.setState({ desmosInstance: calculator });
     }
 
     render(){
         return(
-            <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
-                <h1 className="header-content">Onepoint Method</h1>
+            <div className="content-layout-background">
+                <h1 className="content-header">Onepoint Iteration Method</h1>
                 <div> 
-                    <span><Input placeholder="x = x/2 + 1/4" style={{width:'364px'}} onChange={this.myChangeHandler_f_x} value = {this.state.f_x} /></span>
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
-                    {this.state.ifer}
+                    <span><Input className="content-equation-input" placeholder="43x-1" onChange={this.onChangeEquation} value = {this.state.equation}/></span>
+                    <span className="content-calculate-button"><Button className="content-calculate-button" type="primary" onClick={this.onClickCalculate}>Calculation</Button></span>
+                    {this.state.isError}
                 </div>
-                <div style={{marginTop:'5px'}}>
-                    <span>Initial x =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00" style={{width:'100px'}} onChange={this.myChangeHandler_init_x} value = {this.state.init_x}/></span>
-                    <span>Error =</span>
-                    <span style={{marginLeft:'5px', marginRight:'5px'}}><Input placeholder="0.00001" style={{width:'100px'}} onChange={this.myChangeHandler_er} value = {this.state.er}/></span>
+                <div className="content-attribute-input-line">
+                    <span className="content-text">Initial X =</span>
+                    <span className="content-attribute-input"><Input placeholder="0.0" onChange={this.onChangeInitX} value = {this.state.initX}/></span>
+                    <span className="content-text">Error =</span>
+                    <span className="content-attribute-input"><Input placeholder="0.00001" onChange={this.onChangeER} value = {this.state.er}/></span>
                 </div>
-                <div style={{marginTop:'10px'}}>
-                    <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
+                <div className="content-attribute-input-line">
+                    <span className="content-example-button"><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
-                <div style={{marginTop:'20px'}}>
-                    {this.state.x}
-                </div>
+                {this.state.isCal ?
+                    <div>
+                        <Table className="content-table" dataSource={this.state.dataSource} columns={this.state.columns} />
+                    </div>
+                    : null
+                }
+                <div id="desmos-calculator" className={this.state.showDesmos} />
             </div>
         );
     }
 
 }
 
-export default  Onepoint;
+export default  Falsepositon;

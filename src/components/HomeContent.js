@@ -12,11 +12,9 @@ class HomeContent extends React.Component{
 
     render(){
         return(
-            <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
-                <h1 className="header-content">สวัสดีทุกท่านที่เข้ามา
+            <div className="content-layout-background">
+                <h1 className="content-header">สวัสดีทุกท่านที่เข้ามา
                 เว็บไซต์นี้จัดทำขึ้นเพื่อศึกษาการทำเว็บด้วย React 
-                </h1>
-                <h1 className="header-content">
                 </h1>
             </div>
         );
