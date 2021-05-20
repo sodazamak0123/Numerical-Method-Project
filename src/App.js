@@ -56,7 +56,7 @@ class App extends React.Component {
                 <Route path="/Falseposition" render={() => <Falseposition setKeys={this.setKeys} />} />
                 <Route path="/Onepoint" render={() => <Onepoint setKeys={this.setKeys} />} />
                 <Route path="/Newtonraphson" render={() => <NewtonRaphson setKeys={this.setKeys} />} />
-                <Route path="/secant" component={Secant} />
+                <Route path="/Secant" render={() => <Secant setKeys={this.setKeys} />} />
                 <Route path="/cramers-rule" component={CramersRule} />
                 <Route path="/gauss-elimination-method" component={GaussEliminationMethod} />
                 <Route path="/gauss-jordan-method" component={GaussJordanMethod} />

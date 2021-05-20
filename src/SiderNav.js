@@ -19,7 +19,7 @@ class SiderNav extends React.Component {
                 <Menu.Item key="3">False-position Method<Link to="/Falseposition" /></Menu.Item>
                 <Menu.Item key="4">Onepoint Iteration Method<Link to="/Onepoint" /></Menu.Item>
                 <Menu.Item key="5">Newton Raphson Method<Link to="/Newtonraphson" /></Menu.Item>
-                <Menu.Item key="6">Secant<Link to="/secant" /></Menu.Item>
+                <Menu.Item key="6">Secant Method<Link to="/Secant" /></Menu.Item>
               </SubMenu>
               <SubMenu key="sub2" title="Matrix">
                 <Menu.Item key="7">Cramer's Rule<Link to="/cramers-rule" /></Menu.Item>

@@ -124,7 +124,6 @@ export function calOnePoint(initEquation, initX, initError){
         }
         checkError = newCheckError
         x = newX
-        // data.push({key:iteration, iteration:iteration, x:x.toString(), error:checkError.toString()})
         data.push({x: math.round(x,15).toString(), error: math.round(checkError,15).toString()})
         iteration = iteration + 1
     }
@@ -156,6 +155,40 @@ export function calNewtonRaphson(initEquation, initX, initError){
         data.push({x: math.round(x,15).toString(), error: math.round(checkError,15).toString()})
         iteration = iteration + 1
     } 
+    return {data, pointX, pointY}
+}
+
+export function calSecant(initEquation, initX1, initX2, initError){
+    let equation = math.parse(initEquation).compile()
+    let x1 = math.bignumber(initX1)
+    let x2 = math.bignumber(initX2)
+    let error = math.bignumber(initError)
+    let checkError = math.bignumber(Number.MAX_VALUE)
+    let newX
+    let data = []
+    let pointX = []
+    let pointY = []
+    let iteration = 1
+
+    pointX.push(x1.toFixed(20))
+    pointY.push(equation.evaluate({x:x1}).toFixed(20))
+    pointX.push(x2.toFixed(20))
+    pointY.push(equation.evaluate({x:x2}).toFixed(20))
+
+    while(math.larger(checkError, error)){ 
+        let  up = math.multiply(equation.evaluate({x:x2}), math.subtract(x2, x1))
+        let down = math.subtract(equation.evaluate({x:x2}), equation.evaluate({x:x1}))
+        newX = math.subtract(x2, math.divide(up, down))
+        checkError = math.abs(math.divide(math.subtract(newX, x2), newX))
+        pointX.push(newX.toFixed(20))
+        pointY.push(0)
+        pointX.push(newX.toFixed(20))
+        pointY.push(equation.evaluate({x:newX}).toFixed(20))
+        x1 = x2
+        x2 = newX
+        data.push({x: math.round(newX,15).toString(), error: math.round(checkError,15).toString()})
+        iteration = iteration + 1
+    }
     return {data, pointX, pointY}
 }
 
