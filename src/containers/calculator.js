@@ -131,6 +131,34 @@ export function calOnePoint(initEquation, initX, initError){
     return {data, pointX, pointY}
 }
 
+export function calNewtonRaphson(initEquation, initX, initError){
+
+    let equation = math.parse(initEquation).compile()
+    let diffEquation = math.derivative(initEquation,'x').compile()
+    let x = math.bignumber(initX)
+    let error = math.bignumber(initError)
+    let checkError = math.bignumber(Number.MAX_VALUE)
+    let newX = x
+    let data = []
+    let pointX = []
+    let pointY = []
+    let iteration = 1
+
+    while(math.larger(checkError, error)){
+
+        newX = math.subtract(x, math.divide(equation.evaluate({x:x}), diffEquation.evaluate({x:x})))
+        pointX.push(x.toFixed(20))
+        pointY.push(0)
+        pointX.push(x.toFixed(20))
+        pointY.push(equation.evaluate({x:x}).toFixed(20))
+        checkError = math.abs(math.divide(math.subtract(newX, x), newX))
+        x = newX
+        data.push({x: math.round(x,15).toString(), error: math.round(checkError,15).toString()})
+        iteration = iteration + 1
+    } 
+    return {data, pointX, pointY}
+}
+
 export function calNewtonDivide(matrix, x, selectedPoint){
     let n = selectedPoint.length
     let arrX = []

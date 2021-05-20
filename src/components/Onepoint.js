@@ -3,6 +3,7 @@ import { Input, Button, Table } from 'antd';
 import '../App.css';
 import apis from "../containers/API"
 import Desmos from "../containers/Desmos"
+import DESMOS from 'desmos'
 import math2latex from 'asciimath-to-latex'
 import { calOnePoint } from '../containers/calculator'
 
@@ -97,7 +98,8 @@ class Onepoint extends React.Component{
                   {
                     latex: 'y',
                     values: pointY,
-                    lines: true
+                    lines: true,
+                    color: DESMOS.Colors.BLACK
                   }
                 ]
             });
