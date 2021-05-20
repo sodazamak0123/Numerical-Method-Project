@@ -74,6 +74,10 @@
   border-right: 0;
 }
 
+/* .sidernav-menu .ant-menu-sub.ant-menu-inline{
+  background: pink
+} */
+
 .sidernav-menu .ant-menu-item-selected,
 .sidernav-menu .ant-menu-submenu-selected,
 .sidernav-menu .ant-menu-item-active,
@@ -148,6 +152,11 @@
   height: 41px;
 }
 
+.content-calculate-button .ant-btn-primary{
+  background-color: #743ede;
+  border: #743ede;
+}
+
 .content-attribute-input-line{
   margin-top: 10px;
 }
@@ -167,6 +176,11 @@
   line-height: 1;
   font-size: 20px;
   height: 41px;
+}
+
+.content-example-button .ant-btn-primary{
+  background-color: #743ede;
+  border: #743ede;
 }
 
 .desmos-graph-hide{

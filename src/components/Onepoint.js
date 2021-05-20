@@ -69,7 +69,7 @@ class Falsepositon extends React.Component{
             return;
         }
 
-        // try {
+        try {
 
             this.setState({ isError: null })
             let {data, pointX, pointY} = calOnePoint(this.state.equation, this.state.initX, this.state.er)
@@ -109,9 +109,9 @@ class Falsepositon extends React.Component{
                 showDesmos: 'desmos-graph-show'
             });
 
-        // } catch (error) {
-        //     this.setState({ isError: (<div className="content-equation-error">ใส่ฟังก์ชั่นไม่ถูกต้อง</div>) })
-        // }
+        } catch (error) {
+            this.setState({ isError: (<div className="content-equation-error">ใส่ฟังก์ชั่นไม่ถูกต้อง</div>) })
+        }
     };
 
     componentDidMount() {
@@ -125,7 +125,7 @@ class Falsepositon extends React.Component{
             <div className="content-layout-background">
                 <h1 className="content-header">Onepoint Iteration Method</h1>
                 <div> 
-                    <span><Input className="content-equation-input" placeholder="43x-1" onChange={this.onChangeEquation} value = {this.state.equation}/></span>
+                    <span><Input className="content-equation-input" placeholder="x/2 + 1/4" onChange={this.onChangeEquation} value = {this.state.equation}/></span>
                     <span className="content-calculate-button"><Button className="content-calculate-button" type="primary" onClick={this.onClickCalculate}>Calculation</Button></span>
                     {this.state.isError}
                 </div>
