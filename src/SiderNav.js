@@ -25,9 +25,9 @@ class SiderNav extends React.Component {
                 <Menu.Item key="7">Cramer's Rule Method<Link to="/Cramers-rule" /></Menu.Item>
                 <Menu.Item key="8">Gauss Elimination Method<Link to="/Gauss-elimination" /></Menu.Item>
                 <Menu.Item key="9">Gauss Jordan Method<Link to="/Gauss-jordan" /></Menu.Item>
-                <Menu.Item key="10">LU Decomposition Method<Link to="/lu-decomposition-method" /></Menu.Item>
-                <Menu.Item key="11">Conjugate Gradient Method<Link to="/conjugate-gradient" /></Menu.Item>
-                <Menu.Item key="12">Jacobi Method<Link to="/jacobi" /></Menu.Item>
+                <Menu.Item key="10">LU Decomposition Method<Link to="/LU-Decomposition" /></Menu.Item>
+                <Menu.Item key="11">Conjugate Gradient Method<Link to="/Conjugate-gradient" /></Menu.Item>
+                <Menu.Item key="12">Jacobi Method<Link to="/Jacobi" /></Menu.Item>
                 <Menu.Item key="13">Gauss-Seidel Method<Link to="/gauss-seidel" /></Menu.Item>
               </SubMenu>
               <SubMenu key="sub3" title="Interpolation">

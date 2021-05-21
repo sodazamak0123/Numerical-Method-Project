@@ -251,6 +251,11 @@
   border: #743ede;
 }
 
+.content-attribute-input-matrix-line{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .desmos-graph-hide{
   display: none;
   height: 1000px;

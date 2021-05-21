@@ -60,9 +60,9 @@ class App extends React.Component {
                 <Route path="/Cramers-rule" render={() => <CramersRule setKeys={this.setKeys} />} />
                 <Route path="/Gauss-elimination" render={() => <GaussElimination setKeys={this.setKeys} />} />
                 <Route path="/Gauss-jordan" render={() => <GaussJordan setKeys={this.setKeys} />} />
-                <Route path="/lu-decomposition-method" render={() => <LUDecomposition setKeys={this.setKeys} />} />
-                <Route path="/conjugate-gradient" component={ConjugateGradient} />
-                <Route path="/jacobi" component={Jacobi} />
+                <Route path="/LU-Decomposition" render={() => <LUDecomposition setKeys={this.setKeys} />} />
+                <Route path="/Conjugate-gradient" render={() => <ConjugateGradient setKeys={this.setKeys} />} />
+                <Route path="/Jacobi" render={() => <Jacobi setKeys={this.setKeys} />} />
                 <Route path="/newton-divide" component={NewtonDivide} />
                 <Route path="/lagrange" component={Lagrange} />
                 <Route path="/spline" component={Spline} />

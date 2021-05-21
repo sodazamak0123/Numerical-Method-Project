@@ -371,6 +371,121 @@ export function calLUDecomposition(n, initMatrixA, initMatrixB){
     return { data }
 }
 
+export function calConjugate(n, initMatrixA, initMatrixB, initError){
+    
+    let matrixA = cloneMatrix(initMatrixA)
+    let matrixB = [...initMatrixB]
+    let error = parseFloat(initError)
+    let x = []
+    let data = []
+    let checkError = 999999
+    let iteration = 1
+
+    for(let i=0;i<n;i++){
+        x.push(0)
+    }
+
+    let R = math.multiply(matrixA, x)
+    R = math.subtract(R, matrixB)
+
+    let D = math.multiply(R, -1)
+    let lambda, alpha, temp
+
+    while(checkError > error){
+        
+        // if(iteration>500){
+        //     x.map((x, i) => data.push({value: 'ลู่ออก'}))
+        //     return { data }
+        // }
+        
+        lambda = math.transpose(D)
+        temp = lambda
+        lambda = math.multiply(lambda, R)
+        temp = math.multiply(temp, matrixA)
+        temp = math.multiply(temp, D)
+
+        lambda = lambda/temp
+        lambda = math.multiply(lambda, -1)
+
+        temp = math.multiply(lambda, D)
+        x = math.add(x, temp)
+        temp = math.multiply(matrixA, x)
+        R = math.subtract(temp, matrixB)
+
+        temp = math.transpose(R)
+        temp = math.multiply(temp, R)
+
+        checkError = math.sqrt(temp)
+        alpha = math.transpose(R)
+        alpha = math.multiply(alpha, matrixA)
+        alpha = math.multiply(alpha, D)
+
+        temp = math.transpose(D)
+        temp = math.multiply(temp, matrixA)
+        temp = math.multiply(temp, D)
+
+        alpha = alpha/temp
+
+        temp = math.multiply(alpha, D)
+        D = math.multiply(R, -1)
+        D = math.add(D, temp)
+       
+        iteration = iteration + 1
+
+    }
+    x.map((x, i) => data.push({value: math.round(x,15).toString()}))
+    
+    return { data }
+}
+
+export function calJacobi(n, initMatrixA, initMatrixB, initError, initMatrixX){
+    
+    let MatrixA = cloneMatrix(initMatrixA)
+    let MatrixB = [...initMatrixB]
+    let error = parseFloat(initError)
+    let x = [...initMatrixX]
+    let tmpX = [...x]
+    let data = []
+    let checkError = true
+    let iteration = 1
+
+    while(checkError){
+
+        // if(iteration > 500){
+        //     x.map((x, i) => data.push({value: "ไม่สามารถหาค่าได้"}))
+        //     return { data }
+        // }
+
+        // if(iteration > 10){
+        //     break;
+        // }
+
+        checkError = false
+
+        for(let i=0;i<n;i++){
+
+            let sum = 0
+            for(let j=0;j<n;j++){
+                if(i!==j){
+                    sum = sum + MatrixA[i][j]*x[j]
+                }
+            }
+            tmpX[i] = (MatrixB[i]-sum)/MatrixA[i][i]
+            
+            let tmpErr = Math.abs((tmpX[i]-x[i])/tmpX[i])
+            if(tmpErr > error){
+                checkError = true
+            }
+        }
+
+        x = tmpX.map(x => x)
+        console.log(x)
+        iteration = iteration + 1
+    }
+    x.map((x, i) => data.push({value: math.round(x,15).toString()}))
+    return { data }
+}
+
 export function calNewtonDivide(matrix, x, selectedPoint){
     let n = selectedPoint.length
     let arrX = []
