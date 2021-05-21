@@ -189,7 +189,7 @@ export function calSecant(initEquation, initX1, initX2, initError){
         data.push({x: math.round(newX,15).toString(), error: math.round(checkError,15).toString()})
         iteration = iteration + 1
     }
-    return {data, pointX, pointY}
+    return { data, pointX, pointY }
 }
 
 export function cloneMatrix(intitMatrix){
@@ -201,7 +201,7 @@ export function calCramerRule(n, initMatrixA, initMatrixB){
 
     let matrixA = cloneMatrix(initMatrixA)
     let matrixB = [...initMatrixB]
-    let detA = math.det(matrixA)
+    let detA = math.bignumber(math.det(matrixA))
     let x
     let data = []
     for(let i=0;i<n;i++){
@@ -209,14 +209,14 @@ export function calCramerRule(n, initMatrixA, initMatrixB){
             matrixA[j][i] = matrixB[j]
         }
 
-        x = math.divide(math.det(matrixA), detA)
+        x = math.divide(math.bignumber(math.det(matrixA)), detA)
         data.push({value: math.round(x,15).toString()})
 
         for(let j=0;j<n;j++){
             matrixA[j][i] = math.bignumber(initMatrixA[j][i])
         }
     }
-    return {data}
+    return { data }
 }
 
 export function calNewtonDivide(matrix, x, selectedPoint){

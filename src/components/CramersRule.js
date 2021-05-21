@@ -148,7 +148,8 @@ class CramersRule extends React.Component{
                 dataSource: arr,
                 isCal: true
             })
-        } catch (error){
+        } 
+        catch (error){
             this.setState({ifer:(<div className="content-equation-error">โปรดใส่ข้อมูลให้ถูกต้อง</div>)})
         }
     }
