@@ -39,7 +39,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <BrowserRouter basename="/Numerical-Method-Project">
         <Layout>
           <Header className="header">
             <span className="header-text">Numerical Method</span>
