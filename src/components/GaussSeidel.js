@@ -1,22 +1,38 @@
 import React from 'react';
-import {Input, Button} from 'antd';
+import { Input, Button, Table } from 'antd';
 import './Content.css';
-import {Decimal} from 'decimal.js';
 import apis from "../containers/API"
 import { create, all } from 'mathjs'
+import { calGaussSeidel } from '../containers/calculator';
 
 const config = { }
 const math = create(all, config)
+
 
 class GaussSeidel extends React.Component{
 
     state = {
         n:2,
-        matrix_a:[[],[]],
-        matrix_b:[null,null],
-        x : null,
+        matrixA:[[],[]],
+        matrixB:[null,null],
+        matrixX:[null,null],
         error: null,
+        x : null,
         ifer:null,
+        isCal:false,
+        columns: [
+            {
+                title: 'X',
+                dataIndex: 'x',
+                key: 'x',
+            },
+            {
+                title: 'Value',
+                dataIndex: 'value',
+                key: 'value',
+            }
+        ],
+        dataSource:[]
     }
 
     async getData(){
@@ -25,9 +41,10 @@ class GaussSeidel extends React.Component{
         this.setState({apiData:tempData})
         this.setState({
             n: this.state.apiData[1]["n"],
-            matrix_a : this.state.apiData[1]["matrixA"],
-            matrix_b : this.state.apiData[1]["matrixB"],
-            error : this.state.apiData[1]["error"]
+            matrixA: this.state.apiData[1]["matrixA"],
+            matrixB: this.state.apiData[1]["matrixB"],
+            matrixX: this.state.apiData[1]["initX"],
+            error: this.state.apiData[1]["error"]
         })
     }
 
@@ -35,193 +52,182 @@ class GaussSeidel extends React.Component{
         this.getData()
     }
 
-
-    input_matrix_A = (e) =>{
-        let name = e.target.name.toString().split(" ");
-        let arr = this.state.matrix_a;
+    onChangeMatrixA = (e) =>{
+        let name = e.target.name.split(" ");
+        let arr = this.state.matrixA;
         let index0 = parseInt(name[0]);
         let index1 = parseInt(name[1]);
         arr[index0][index1] = e.target.value;
-        //console.log(name);
-        this.setState({matrix_a:arr});
+        this.setState({matrixA:arr});
     }
 
-    input_matrix_B = (e) =>{
-        let name = e.target.name.toString();
-        let arr = this.state.matrix_b;
+    onChangeMatrixB = (e) =>{
+        let name = e.target.name;
+        let arr = this.state.matrixB;
         let index = parseInt(name);
         arr[index] = e.target.value;
-        //console.log(name);
-        this.setState({matrix_b:arr});
+        this.setState({matrixB:arr});
     }
 
-    input_error = (e) =>{
+    onChangeMatrixX = (e) =>{
+        let name = e.target.name;
+        let arr = this.state.matrixX;
+        let index = parseInt(name);
+        arr[index] = e.target.value;
+        this.setState({matrixX:arr});
+    }
+
+    onChangeError = (e) =>{
         this.setState({error:e.target.value});
     }
 
-    matrix_A_show =()=>{
+    showMatrixA =()=>{
         let arr = []
-        let number = this.state.matrix_a;
+        let number = this.state.matrixA;
         for(let i=0;i<this.state.n;i++){
             for(let j=0;j<this.state.n;j++){
-                arr.push(<span style={{margin:'2.5px'}}><Input name={(i).toString()+" "+(j).toString()} style={{width:'50px',textAlign:'center'}} onChange={this.input_matrix_A} autocomplete="off" value={number[i][j]}/></span>)
+                arr.push(<span className="content-matrix-input-column"><Input name={(i).toString()+" "+(j).toString()} onChange={this.onChangeMatrixA} autocomplete="off" value={number[i][j]}/></span>)
             }
-            arr.push(<div style={{margin:'5px'}}></div>)
+            arr.push(<div className="content-matrix-input-row"></div>)
         }
         return(arr);
     }
 
-    matrix_X_show =()=>{
+    showMatrixX =()=>{
         let arr = []
         for(let i=0;i<this.state.n;i++){
-            arr.push(<span style={{margin:'2.5px'}}><Input style={{width:'50px',textAlign:'center'}} value={"x"+(i+1)} disabled/></span>)
-            arr.push(<div style={{margin:'5px'}}></div>)
+            arr.push(<span className="content-matrix-input-column"><Input value={"x"+(i+1)} disabled/></span>)
+            arr.push(<div className="content-matrix-input-row"></div>)
         }
         return(arr);
     }
 
-    matrix_B_show =()=>{
+    showMatrixB =()=>{
         let arr = []
-        let number = this.state.matrix_b;
+        let number = this.state.matrixB
         for(let i=0;i<this.state.n;i++){
-            arr.push(<span style={{margin:'2.5px'}}><Input name={(i).toString()} style={{width:'50px',textAlign:'center'}} onChange={this.input_matrix_B} autocomplete="off" value={number[i]}/></span>)
-            arr.push(<div style={{margin:'5px'}}></div>)
+            arr.push(<span className="content-matrix-input-column"><Input name={(i).toString()} onChange={this.onChangeMatrixB} autocomplete="off" value={number[i]}/></span>)
+            arr.push(<div className="content-matrix-input-row"></div>)
+        }
+        return(arr);
+    }
+
+    showMatrixInitX =()=>{
+        let arr = []
+        let number = this.state.matrixX
+        for(let i=0;i<this.state.n;i++){
+            arr.push(<span className="content-matrix-input-column"><Input name={(i).toString()} onChange={this.onChangeMatrixX} autocomplete="off" value={number[i]}/></span>)
+            arr.push(<div className="content-matrix-input-row"></div>)
         }
         return(arr);
     }
 
 
-    add_dm = (e) =>{
+    onClickPlus = (e) =>{
         let n = this.state.n
         if(n<8){
-            this.setState({n:n+1})
+            let arrA = this.state.matrixA
+            let arrB = this.state.matrixB
+            let arrX = this.state.matrixX
+            arrA.push([])
+            arrA.map(x => {x.push(null)})
+            arrB.push(null)
+            arrX.push(null)
+            this.setState({
+                n:n+1,
+                matrixA: arrA,
+                matrixB: arrB,
+                matrixX: arrX
+            })
         }
-        else{
-            return;
-        }
-        let arr_a = this.state.matrix_a;
-        let arr_b = this.state.matrix_b;
-        arr_a.push([]);
-        arr_b.push(null);
-        for(let i=0;i<n+1;i++){
-            arr_a[i].push(null);
-        }
-        this.setState({matrix_a:arr_a});
-        this.setState({matrix_b:arr_b});
-        //console.log(arr_a);
     }
 
-    del_dm = (e) =>{
+    onClickMinus = (e) =>{
         let n = this.state.n;
         if(n>2){
-            this.setState({n:n-1})
+            let arrA = this.state.matrixA
+            let arrB = this.state.matrixB
+            let arrX = this.state.matrixX
+            arrA.pop()
+            arrA.map(x => {x.pop()})
+            arrB.pop()
+            arrX.pop()
+            this.setState({
+                n:n-1,
+                matrixA: arrA,
+                matrixB: arrB,
+                matrixX: arrX
+            })
         }
-        else{
-            return;
-        }
-        let arr_a = this.state.matrix_a;
-        let arr_b = this.state.matrix_b;
-        arr_a.pop();
-        arr_b.pop();
-        for(let i=0;i<n-1;i++){
-            arr_a[i].pop();
-        }
-        this.setState({matrix_a:arr_a});
-        this.setState({matrix_b:arr_b});
-        //console.log(arr_a);
     }
 
-    cloneArray(initArry){
-        let Arr = initArry.map( x => [...x])
-        return Arr
+
+    onClickCalculate = (e) =>{
+
+        try{
+            this.setState({ifer:null})
+            let { data } = calGaussSeidel(this.state.n, this.state.matrixA, this.state.matrixB, this.state.error, this.state.matrixX)
+            let arr = []
+            data.map((x, i) => {
+                arr.push({
+                    key: i+1,
+                    x: 'X'+(i+1),
+                    value: x['value']
+                })
+            })
+            this.setState({
+                dataSource: arr,
+                isCal: true
+            })
+        }
+        catch (error){
+            this.setState({ifer:(<div className="content-equation-error">โปรดใส่ข้อมูลให้ถูกต้อง</div>)})
+        }
     }
 
-    find_x = (e) =>{
-
-        let MatrixA = this.cloneArray(this.state.matrix_a)
-        let MatrixB = [...this.state.matrix_b]
-        let error = parseFloat(this.state.error)
-        let x = []
-        let tmpX = []
-        let ans_x = []
-        let checkError = true
-        let n = this.state.n
-        let iteration = 1
-
-        for(let i=0;i<n;i++){
-            x.push(1)
-            tmpX.push(1)
-        }
-
-        while(checkError){
-
-            if(iteration > 500){
-                x.map((x, i) => ans_x.push({key:i+1, x:"x"+(i+1), value:"ไม่สามารถหาค่าได้"}))
-                return
-            }
-
-            checkError = false
-
-            for(let i=0;i<n;i++){
-
-                let sum = 0
-                for(let j=0;j<n;j++){
-                    if(i!==j){
-                        sum = sum + MatrixA[i][j]*x[j]
-                    }
-                }
-                tmpX[i] = (MatrixB[i]-sum)/MatrixA[i][i]
-                
-                let tmpErr = Math.abs((tmpX[i]-x[i])/tmpX[i])
-                if(tmpErr > error){
-                    checkError = true
-                }
-            }
-
-            x = tmpX.map(x => x)
-            iteration = iteration + 1
-        }
-    
-        for(let i=0;i<n;i++){
-            ans_x.push(<div style={{fontSize:'40px',fontWeight:'bold'}}>Result of x{i+1} is {parseFloat(x[i])}</div>);
-        }
-        this.setState({x:ans_x})
+    componentDidMount() {
+        this.props.setKeys(['13'])
     }
-
 
     render(){
         return(
-            <div className="site-layout-background" style={{ padding: 24, textAlign: 'left' }}>
-                <h1 className="header-content">Gauss Seidel Method</h1>
-                <div style={{marginBottom:'10px'}}> 
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.del_dm}>-</Button></span>
-                    <span style={{marginLeft:'10px', fontSize:'20px'}}>{this.state.n} x {this.state.n}</span>
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.add_dm}>+</Button></span>
+            <div className="content-layout-background">
+                <h1 className="content-header">Gauss-Seidel Method</h1>
+                <div className="content-plus-minus-line"> 
+                    <span className="content-plus-minus-button"><Button type="primary" onClick={this.onClickMinus}>-</Button></span>
+                    <span className="content-n-text">{this.state.n} x {this.state.n}</span>
+                    <span className="content-plus-minus-button"><Button type="primary" onClick={this.onClickPlus}>+</Button></span>
                 </div>
-                <div style={{display:'flex',flexFlow:'row'}}>
-                    <div style={{display:'flex', alignItems:'center', fontSize:'25px'}}>A =</div>
-                    <div style={{alignItems:'center'}}>{this.matrix_A_show()}</div>
-                    <div style={{display:'flex', alignItems:'center', fontSize:'25px',marginLeft:'10px', marginRight:'10px'}}>X =</div>
-                    <div style={{alignItems:'center'}}>{this.matrix_X_show()}</div>
-                    <div style={{display:'flex', alignItems:'center', fontSize:'25px',marginLeft:'10px', marginRight:'10px'}}>b =</div>
-                    <div style={{alignItems:'center'}}>{this.matrix_B_show()}</div>
+                <div className="content-matrix-area">
+                    <div className="content-matrix-text-start">A =</div>
+                    <div className="content-matrix-input-area">{this.showMatrixA()}</div>
+                    <div className="content-matrix-text">X =</div>
+                    <div className="content-matrix-input-area">{this.showMatrixX()}</div>
+                    <div className="content-matrix-text">B =</div>
+                    <div className="content-matrix-input-area">{this.showMatrixB()}</div>
+                    <div className="content-matrix-text">Initial X =</div>
+                    <div className="content-matrix-input-area">{this.showMatrixInitX()}</div>
                 </div>
-
-                <div style={{display:'flex', alignItems:'center', fontSize:'25px'}}>
-                    Error
-                    <Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.input_error} value = {this.state.error} autoComplete="off" />
+                <div className="content-attribute-input-matrix-line">
+                    <span className="content-text">Error =</span>
+                    <span className="content-attribute-input"><Input placeholder="0.00001" onChange={this.onChangeError} value = {this.state.error}/></span>
                 </div>
-
-                <div style={{marginTop:'10px'}}>
+                <div>
+                    {this.state.ifer}
+                </div>
+                <div className="content-example-button">
                     <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
 
-                <div style={{marginTop:'10px', marginBottom:'10px'}}>
-                    <span><Button type="primary" onClick={this.find_x}>Calculation</Button></span>
+                <div className="content-matrix-calculate-button">
+                    <span><Button type="primary" onClick={this.onClickCalculate}>Calculation</Button></span>
                 </div>
-                <div style={{marginTop:'20px'}}>
-                    {this.state.x}
-                </div>
+                {this.state.isCal ?
+                    <div>
+                        <Table className="content-table" dataSource={this.state.dataSource} columns={this.state.columns} />
+                    </div>
+                    : null
+                }
             </div>
         );
     }

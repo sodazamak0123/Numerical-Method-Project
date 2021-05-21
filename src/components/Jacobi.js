@@ -164,7 +164,7 @@ class Jacobi extends React.Component{
 
     onClickCalculate = (e) =>{
 
-        // try{
+        try{
             this.setState({ifer:null})
             let { data } = calJacobi(this.state.n, this.state.matrixA, this.state.matrixB, this.state.error, this.state.matrixX)
             let arr = []
@@ -179,10 +179,10 @@ class Jacobi extends React.Component{
                 dataSource: arr,
                 isCal: true
             })
-        // }
-        // catch (error){
-        //     this.setState({ifer:(<div className="content-equation-error">โปรดใส่ข้อมูลให้ถูกต้อง</div>)})
-        // }
+        }
+        catch (error){
+            this.setState({ifer:(<div className="content-equation-error">โปรดใส่ข้อมูลให้ถูกต้อง</div>)})
+        }
     }
 
     componentDidMount() {

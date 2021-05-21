@@ -13,6 +13,7 @@ import CramersRule from './components/CramersRule';
 import GaussElimination from './components/GaussElimination';
 import GaussJordan from './components/GaussJordan';
 import LUDecomposition from './components/LUDecomposition';
+import GaussSeidel from './components/GaussSeidel';
 import NewtonDivide from './components/NewtonDivide';
 import Lagrange from './components/Lagrange';
 import Spline from './components/Spline';
@@ -63,6 +64,7 @@ class App extends React.Component {
                 <Route path="/LU-Decomposition" render={() => <LUDecomposition setKeys={this.setKeys} />} />
                 <Route path="/Conjugate-gradient" render={() => <ConjugateGradient setKeys={this.setKeys} />} />
                 <Route path="/Jacobi" render={() => <Jacobi setKeys={this.setKeys} />} />
+                <Route path="/Gauss-seidel" render={() => <GaussSeidel setKeys={this.setKeys} />} />
                 <Route path="/newton-divide" component={NewtonDivide} />
                 <Route path="/lagrange" component={Lagrange} />
                 <Route path="/spline" component={Spline} />

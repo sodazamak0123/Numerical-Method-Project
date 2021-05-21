@@ -16,14 +16,16 @@ export function calBisection(initEquation, initXL, initXR, initError){
     let pointXL = [xl.toString()]
     let pointXR = [xr.toString()]
 
-    if (checkValue > 0) {
+    if (math.larger(checkValue, 0)) {
         xr = xm
         pointXR.push(xr.toString())
+        console.log('XR')
 
     }
-    else if (checkValue < 0) {
+    else if (math.larger(0, checkValue)) {
         xl = xm
         pointXL.push(xl.toString())
+        console.log('XL')
     }
 
     data.push({x: math.round(xm,15).toString(), error: 1})
@@ -31,13 +33,15 @@ export function calBisection(initEquation, initXL, initXR, initError){
     while (math.larger(checkError, error)) {
         newXM = math.divide(math.add(xl, xr), 2)
         checkValue = math.multiply(equation.evaluate({ x: newXM }), equation.evaluate({ x: xr }))
-        if (checkValue > 0) {
+        if (math.larger(checkValue, 0)) {
             xr = newXM
             pointXR.push(xr.toString())
+            console.log('XR')
         }
-        else if (checkValue < 0) {
+        else if(math.larger(0, checkValue)) {
             xl = newXM
             pointXL.push(xl.toString())
+            console.log('XL')
         }
         checkError = math.abs(math.divide(math.subtract(newXM, xm), newXM))
         xm = newXM
@@ -63,11 +67,11 @@ export function calFalsePosition(initEquation, initXL, initXR, initError){
     let pointXL = [xl.toString()]
     let pointXR = [xr.toString()]
 
-    if (checkValue > 0) {
+    if (math.larger(checkValue, 0)) {
         xr = x
         pointXR.push(xr.toString())
     }
-    else if (checkValue < 0) {
+    else if (math.larger(0, checkValue)) {
         xl = x
         pointXL.push(xl.toString())
     }
@@ -82,11 +86,11 @@ export function calFalsePosition(initEquation, initXL, initXR, initError){
         
         checkValue = math.multiply(equation.evaluate({x:newX}), equationR)
 
-        if(checkValue > 0){
+        if(math.larger(checkValue, 0)){
             xr = newX
             pointXR.push(xr.toString())
         }
-        else if (checkValue < 0) {
+        else if(math.larger(0, checkValue)) {
             xl = newX
             pointXL.push(xl.toString())
         }
@@ -365,7 +369,7 @@ export function calLUDecomposition(n, initMatrixA, initMatrixB){
             }
         }
         x[i] = math.divide(math.subtract(y[i], sum), matrixU[i][i])
-        data.push({value: math.round(x[i],15).toString()})
+        data[i]= {value: math.round(x[i],15).toString()}
     }
 
     return { data }
@@ -479,7 +483,53 @@ export function calJacobi(n, initMatrixA, initMatrixB, initError, initMatrixX){
         }
 
         x = tmpX.map(x => x)
-        console.log(x)
+        iteration = iteration + 1
+    }
+    x.map((x, i) => data.push({value: math.round(x,15).toString()}))
+    return { data }
+}
+
+export function calGaussSeidel(n, initMatrixA, initMatrixB, initError, initMatrixX){
+    
+    let MatrixA = cloneMatrix(initMatrixA)
+    let MatrixB = [...initMatrixB]
+    let error = parseFloat(initError)
+    let x = [...initMatrixX]
+    let tmpX = [...x]
+    let data = []
+    let checkError = true
+    let iteration = 1
+
+    while(checkError){
+
+        // if(iteration > 500){
+        //     x.map((x, i) => data.push({value: "ไม่สามารถหาค่าได้"}))
+        //     return { data }
+        // }
+
+        // if(iteration > 10){
+        //     break;
+        // }
+
+        checkError = false
+
+        for(let i=0;i<n;i++){
+
+            let sum = 0
+            for(let j=0;j<n;j++){
+                if(i!==j){
+                    sum = sum + MatrixA[i][j]*x[j]
+                }
+            }
+            tmpX[i] = (MatrixB[i]-sum)/MatrixA[i][i]
+            
+            let tmpErr = Math.abs((tmpX[i]-x[i])/tmpX[i])
+            if(tmpErr > error){
+                checkError = true
+            }
+            x[i] = tmpX[i]
+        }
+
         iteration = iteration + 1
     }
     x.map((x, i) => data.push({value: math.round(x,15).toString()}))
