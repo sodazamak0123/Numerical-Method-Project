@@ -275,7 +275,7 @@ export function calGaussJordan(n, initMatrixA, initMatrixB){
             for(let k =i-1;k<n;k++){
                 matrixA[j][k] = math.subtract(matrixA[j][k], math.multiply(math.divide(matrixA[i-1][k], divide), multi))
             }
-            
+
             matrixB[j] = math.subtract(matrixB[j], math.multiply(math.divide(matrixB[i-1], divide), multi))
         }
     }
@@ -296,6 +296,75 @@ export function calGaussJordan(n, initMatrixA, initMatrixB){
 
     for(let i=0;i<n;i++){
         x.push(math.divide(matrixB[i], matrixA[i][i]))
+        data.push({value: math.round(x[i],15).toString()})
+    }
+
+    return { data }
+}
+
+export function calLUDecomposition(n, initMatrixA, initMatrixB){
+    
+    let matrixA = cloneMatrix(initMatrixA)
+    let matrixB = [...initMatrixB]
+    let matrixL = []
+    let matrixU = []
+    let x = []
+    let y = []
+    let data = []
+    
+    for(let i=0;i<n;i++){
+        matrixL.push([])
+        matrixU.push([])
+        x.push(math.bignumber(1))
+        y.push(math.bignumber(1))
+        for(let j=0;j<n;j++){
+            matrixL[i][j] = math.bignumber(0)
+            if(i===j){
+                matrixU[i][j] = math.bignumber(1)
+            }
+            else{
+                matrixU[i][j] = math.bignumber(0)
+            }
+        }
+    }
+
+    for(let i=0;i<n;i++){
+        for(let j=0;j<n;j++){
+            let sum = math.bignumber(0)
+            for(let k=0;k<n;k++){
+                if(k!==j || i<j){
+                    sum = math.add(sum, math.multiply(matrixL[i][k], matrixU[k][j]))
+                }
+            }
+            if(i>=j){
+                sum = math.subtract(matrixA[i][j], sum)
+                matrixL[i][j] = sum
+            }
+            else{
+                sum = math.subtract(matrixA[i][j], sum)
+                matrixU[i][j] = math.divide(sum, matrixL[i][i])
+            }
+        }
+    }
+
+    for(let i=0;i<n;i++){
+        let sum = math.bignumber(0)
+        for(let j=0;j<n;j++){
+            if(i!==j){
+                sum = math.add(sum, math.multiply(matrixL[i][j], y[j]))
+            }
+        }
+        y[i] = math.divide(math.subtract(matrixB[i], sum), matrixL[i][i])
+    }
+
+    for(let i=n-1;i>=0;i--){
+        let sum = math.bignumber(0)
+        for(let j=0;j<n;j++){
+            if(i!==j){
+                sum = math.add(sum , math.multiply(matrixU[i][j], x[j]))
+            }
+        }
+        x[i] = math.divide(math.subtract(y[i], sum), matrixU[i][i])
         data.push({value: math.round(x[i],15).toString()})
     }
 
