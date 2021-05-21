@@ -5,18 +5,18 @@ import apis from "../containers/API"
 import Desmos from "../containers/Desmos"
 import DESMOS from 'desmos'
 import math2latex from 'asciimath-to-latex'
-import { calNewtonRaphson, calSecant } from '../containers/calculator'
+import { calSecant } from '../containers/calculator'
 
-class NewtonRaphson extends React.Component{
+class Secant extends React.Component{
 
     state = {
-        equation:'',
-        initX1:null,
-        initX2:null,
-        er:null,
-        isError:null,
-        isCal:false,
-        desmosInstance:null,
+        equation: '',
+        initX1: null,
+        initX2: null,
+        er: null,
+        isError: null,
+        isCal: false,
+        desmosInstance: null,
         columns: [
             {
                 title: 'Iteration',
@@ -136,9 +136,9 @@ class NewtonRaphson extends React.Component{
                 </div>
                 <div className="content-attribute-input-line">
                     <span className="content-text">Initial X1 =</span>
-                    <span className="content-attribute-input"><Input placeholder="1.0" onChange={this.onChangeInitX1} value = {this.state.initX1}/></span>
+                    <span className="content-attribute-input"><Input placeholder="2.0" onChange={this.onChangeInitX1} value = {this.state.initX1}/></span>
                     <span className="content-text">Initial X2 =</span>
-                    <span className="content-attribute-input"><Input placeholder="1.0" onChange={this.onChangeInitX2} value = {this.state.initX2}/></span>
+                    <span className="content-attribute-input"><Input placeholder="3.0" onChange={this.onChangeInitX2} value = {this.state.initX2}/></span>
                     <span className="content-text">Error =</span>
                     <span className="content-attribute-input"><Input placeholder="0.00001" onChange={this.onChangeER} value = {this.state.er}/></span>
                 </div>
@@ -158,4 +158,4 @@ class NewtonRaphson extends React.Component{
 
 }
 
-export default  NewtonRaphson;
+export default  Secant;
