@@ -9,7 +9,7 @@ const config = { }
 const math = create(all, config)
 
 
-class CramersRule extends React.Component{
+class GaussElimination extends React.Component{
 
     state = {
         n:2,
@@ -154,13 +154,13 @@ class CramersRule extends React.Component{
     }
 
     componentDidMount() {
-        this.props.setKeys(['7'])
+        this.props.setKeys(['8'])
     }
 
     render(){
         return(
             <div className="content-layout-background">
-                <h1 className="content-header">Cramer's Rule Method</h1>
+                <h1 className="content-header">Gauss Elimination Method</h1>
                 <div className="content-plus-minus-line"> 
                     <span className="content-plus-minus-button"><Button type="primary" onClick={this.onClickMinus}>-</Button></span>
                     <span className="content-n-text">{this.state.n} x {this.state.n}</span>
@@ -196,4 +196,4 @@ class CramersRule extends React.Component{
 
 }
 
-export default  CramersRule;
+export default  GaussElimination;

@@ -178,7 +178,75 @@
   height: 41px;
 }
 
-.content-example-button .ant-btn-primary{
+.content-plus-minus-button .ant-btn{
+  line-height: 1;
+  font-size: 20px;
+  height: 41px;
+  width: 44px;
+}
+
+.content-plus-minus-line{
+  margin-bottom: 10px;
+}
+
+.content-n-text{
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 30px;
+}
+
+.content-example-button .ant-btn-primary,
+.content-plus-minus-button .ant-btn-primary{
+  background-color: #743ede;
+  border: #743ede;
+}
+
+.content-matrix-area{
+  display: flex;
+  flex-flow: row;
+}
+
+.content-matrix-text-start{
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+}
+
+.content-matrix-text{
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.content-matrix-input-area{
+  align-items: center;
+}
+
+.content-matrix-input-row{
+  margin: 10px;
+}
+
+.content-matrix-input-column{
+  margin: 5px;
+}
+
+.content-matrix-input-column .ant-input{
+  font-size: 18px;
+  width: 60px;
+  text-align: center;
+}
+
+.content-matrix-calculate-button .ant-btn{
+  line-height: 1;
+  font-size: 20px;
+  height: 41px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.content-matrix-calculate-button .ant-btn-primary{
   background-color: #743ede;
   border: #743ede;
 }

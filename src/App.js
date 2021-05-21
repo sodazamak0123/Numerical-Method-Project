@@ -10,7 +10,7 @@ import Falseposition from './components/Falseposition';
 import NewtonRaphson from './components/NewtonRaphson';
 import Secant from './components/Secant';
 import CramersRule from './components/CramersRule';
-import GaussEliminationMethod from './components/GaussEliminationMethod';
+import GaussElimination from './components/GaussElimination';
 import GaussJordanMethod from './components/GaussJordanMethod';
 import LUDecompositionMethod from './components/LUDecompositionMethod';
 import NewtonDivide from './components/NewtonDivide';
@@ -57,8 +57,8 @@ class App extends React.Component {
                 <Route path="/Onepoint" render={() => <Onepoint setKeys={this.setKeys} />} />
                 <Route path="/Newtonraphson" render={() => <NewtonRaphson setKeys={this.setKeys} />} />
                 <Route path="/Secant" render={() => <Secant setKeys={this.setKeys} />} />
-                <Route path="/cramers-rule" component={CramersRule} />
-                <Route path="/gauss-elimination-method" component={GaussEliminationMethod} />
+                <Route path="/Cramers-rule" render={() => <CramersRule setKeys={this.setKeys} />} />
+                <Route path="/Gauss-elimination" render={() => <GaussElimination setKeys={this.setKeys} />} />
                 <Route path="/gauss-jordan-method" component={GaussJordanMethod} />
                 <Route path="/lu-decomposition-method" component={LUDecompositionMethod} />
                 <Route path="/conjugate-gradient" component={ConjugateGradient} />
