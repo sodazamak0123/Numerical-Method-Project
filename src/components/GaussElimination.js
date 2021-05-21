@@ -3,7 +3,7 @@ import { Input, Button, Table } from 'antd';
 import './Content.css';
 import apis from "../containers/API"
 import { create, all } from 'mathjs'
-import { calCramerRule } from '../containers/calculator';
+import { calGaussElimination } from '../containers/calculator';
 
 const config = { }
 const math = create(all, config)
@@ -134,7 +134,7 @@ class GaussElimination extends React.Component{
 
         try{
             this.setState({ifer:null})
-            let { data } = calCramerRule(this.state.n, this.state.matrixA, this.state.matrixB)
+            let { data } = calGaussElimination(this.state.n, this.state.matrixA, this.state.matrixB)
             let arr = []
             data.map((x, i) => {
                 arr.push({
@@ -148,7 +148,8 @@ class GaussElimination extends React.Component{
                 dataSource: arr,
                 isCal: true
             })
-        } catch (error){
+        }
+        catch (error){
             this.setState({ifer:(<div className="content-equation-error">โปรดใส่ข้อมูลให้ถูกต้อง</div>)})
         }
     }

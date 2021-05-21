@@ -219,6 +219,46 @@ export function calCramerRule(n, initMatrixA, initMatrixB){
     return { data }
 }
 
+export function calGaussElimination(n, initMatrixA, initMatrixB){
+
+    let matrixA = cloneMatrix(initMatrixA)
+    let matrixB = [...initMatrixB]
+    let data = []
+    let x = []
+    for(let i=1;i<n;i++){
+        for(let j=i;j<n;j++){
+
+            let divide = math.bignumber(matrixA[i-1][i-1])
+            let multi = math.bignumber(matrixA[j][i-1])
+
+            for(let k =i-1;k<n;k++){
+                matrixA[j][k] = math.subtract(matrixA[j][k], math.multiply(math.divide(matrixA[i-1][k], divide), multi))
+            }
+            matrixB[j] = math.subtract(matrixB[j], math.multiply(math.divide(matrixB[i-1], divide), multi))
+        }
+    }
+
+    for(let i=0;i<n;i++){
+        x.push(math.bignumber(1))
+    }
+
+    for(let i=n-1;i>=0;i--){
+
+        let sum = math.bignumber(0)
+        for(let j=0;j<n;j++){
+
+            if(i!==j){
+                sum = math.add(sum, math.multiply(matrixA[i][j], x[j]))
+            } 
+
+        }
+        x[i] = math.divide(math.subtract(matrixB[i], sum), matrixA[i][i])
+        data[i] = {value: math.round(x[i],15).toString()}
+    }
+
+    return { data }
+}
+
 export function calNewtonDivide(matrix, x, selectedPoint){
     let n = selectedPoint.length
     let arrX = []
