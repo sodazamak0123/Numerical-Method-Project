@@ -11,7 +11,7 @@ import NewtonRaphson from './components/NewtonRaphson';
 import Secant from './components/Secant';
 import CramersRule from './components/CramersRule';
 import GaussElimination from './components/GaussElimination';
-import GaussJordanMethod from './components/GaussJordanMethod';
+import GaussJordan from './components/GaussJordan';
 import LUDecompositionMethod from './components/LUDecompositionMethod';
 import NewtonDivide from './components/NewtonDivide';
 import Lagrange from './components/Lagrange';
@@ -59,7 +59,7 @@ class App extends React.Component {
                 <Route path="/Secant" render={() => <Secant setKeys={this.setKeys} />} />
                 <Route path="/Cramers-rule" render={() => <CramersRule setKeys={this.setKeys} />} />
                 <Route path="/Gauss-elimination" render={() => <GaussElimination setKeys={this.setKeys} />} />
-                <Route path="/gauss-jordan-method" component={GaussJordanMethod} />
+                <Route path="/Gauss-jordan" render={() => <GaussJordan setKeys={this.setKeys} />} />
                 <Route path="/lu-decomposition-method" component={LUDecompositionMethod} />
                 <Route path="/conjugate-gradient" component={ConjugateGradient} />
                 <Route path="/jacobi" component={Jacobi} />

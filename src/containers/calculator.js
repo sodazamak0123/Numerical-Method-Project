@@ -259,6 +259,49 @@ export function calGaussElimination(n, initMatrixA, initMatrixB){
     return { data }
 }
 
+export function calGaussJordan(n, initMatrixA, initMatrixB){
+
+    let matrixA = cloneMatrix(initMatrixA)
+    let matrixB = [...initMatrixB]
+    let data = []
+    let x = []
+
+    for(let i=1;i<n;i++){
+        for(let j=i;j<n;j++){
+
+            let divide = math.bignumber(matrixA[i-1][i-1])
+            let multi = math.bignumber(matrixA[j][i-1])
+
+            for(let k =i-1;k<n;k++){
+                matrixA[j][k] = math.subtract(matrixA[j][k], math.multiply(math.divide(matrixA[i-1][k], divide), multi))
+            }
+            
+            matrixB[j] = math.subtract(matrixB[j], math.multiply(math.divide(matrixB[i-1], divide), multi))
+        }
+    }
+
+    for(let i=n-2;i>=0;i--){
+
+        for(let j=i;j>=0;j--){
+
+            let divide = math.bignumber(matrixA[i+1][i+1])
+            let multi = math.bignumber(matrixA[j][i+1])
+
+            for(let k=n-1;k>=i;k--){
+                matrixA[j][k] = math.subtract(matrixA[j][k], math.multiply(math.divide(matrixA[i+1][k], divide), multi))
+            }
+            matrixB[j] = math.subtract(matrixB[j], math.multiply(math.divide(matrixB[i+1], divide), multi))
+        }
+    }
+
+    for(let i=0;i<n;i++){
+        x.push(math.divide(matrixB[i], matrixA[i][i]))
+        data.push({value: math.round(x[i],15).toString()})
+    }
+
+    return { data }
+}
+
 export function calNewtonDivide(matrix, x, selectedPoint){
     let n = selectedPoint.length
     let arrX = []
