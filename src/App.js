@@ -66,7 +66,7 @@ class App extends React.Component {
                 <Route path="/Jacobi" render={() => <Jacobi setKeys={this.setKeys} />} />
                 <Route path="/Gauss-seidel" render={() => <GaussSeidel setKeys={this.setKeys} />} />
                 <Route path="/Newton-divide" render={() => <NewtonDivide setKeys={this.setKeys} />} />
-                <Route path="/lagrange" component={Lagrange} />
+                <Route path="/Lagrange" render={() => <Lagrange setKeys={this.setKeys} />} />
                 <Route path="/spline" component={Spline} />
                 <Route path="/regression" component={Regression} />
                 <Route path="/swagger" component={SwaggerDoc} />

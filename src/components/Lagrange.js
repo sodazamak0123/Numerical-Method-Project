@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Input } from "antd"
+import { Button, Input, Checkbox } from "antd"
 import { calLagrange } from "../containers/calculator"
 import apis from "../containers/API"
 import Desmos from "../containers/Desmos"
@@ -10,22 +10,33 @@ class Lagrange extends React.Component{
         n : 2,
         matrix : [[],[]],
         selectedPoint : null,
+        checkBox: [true, true],
         x : null,
         ans : null,
         apiData: null,
         isCalculate: false,
-        desmosInstance: null
+        desmosInstance: null,
+        showDesmos: 'desmos-graph-hide'
     }
 
     async getData(){
         let tempData = null
         await apis.getAllInterpolation().then(res => {tempData = res.data})
         this.setState({apiData:tempData})
+        let tmpPoint = tempData[0]["selectedPoint"].split(',')
+        let tmpCheckBox = []
+        for(let i=0;i<tempData[0]["n"];i++){
+            tmpCheckBox.push(false)
+        }
+        tmpPoint.map( x => {
+            tmpCheckBox[(+x)-1] = true
+        })
         this.setState({
             n: this.state.apiData[0]["n"],
             matrix : this.state.apiData[0]["matrix"],
             selectedPoint : this.state.apiData[0]["selectedPoint"],
             x : this.state.apiData[0]["x"],
+            checkBox: tmpCheckBox
         })
     }
 
@@ -77,6 +88,15 @@ class Lagrange extends React.Component{
         })
     }
 
+    onChangeCheckBoxPoint = e =>{
+        let index = e.target.name.split('_')
+        let tmpCheckBox = this.state.checkBox
+        tmpCheckBox[parseInt(index[1])] = e.target.checked
+        this.setState({
+            checkBox : tmpCheckBox
+        })
+    }
+
     onClickCalculation = e =>{
         let tmpMatrix = []
         let tmpDesmosInstance = this.state.desmosInstance
@@ -89,8 +109,16 @@ class Lagrange extends React.Component{
             }
         }
 
-        let tmpSelectPoint = this.state.selectedPoint.split(",")
-        tmpSelectPoint = tmpSelectPoint.map(x => (+x)-1)
+        // let tmpSelectPoint = this.state.selectedPoint.split(",")
+        // tmpSelectPoint = tmpSelectPoint.map(x => (+x)-1)
+
+        let tmpSelectPoint = []
+
+        this.state.checkBox.map((x,i) => {
+            if(x){
+                tmpSelectPoint.push(i)
+            }
+        })
 
         let tmpAns = calLagrange(tmpMatrix, +this.state.x, tmpSelectPoint)
 
@@ -152,7 +180,8 @@ class Lagrange extends React.Component{
         this.setState({
             ans : tmpAns,
             isCalculate : true,
-            desmosInstance : tmpDesmosInstance
+            desmosInstance : tmpDesmosInstance,
+            showDesmos: 'desmos-graph-show'
         })
 
     }
@@ -162,9 +191,10 @@ class Lagrange extends React.Component{
         let tmpMatrix = this.state.matrix;
         for(let i=0;i<this.state.n;i++){
             for(let j=0;j<2;j++){
-                arr.push(<span style={{margin:'2.5px'}}><Input name={(i).toString()+" "+(j).toString()} style={{width:'100px',textAlign:'center'}} onChange={this.onChangeMatrix} autoComplete="off" value={tmpMatrix[i][j]}/></span>)
+                arr.push(<span className="content-point-input-column"><Input name={(i).toString()+" "+(j).toString()} onChange={this.onChangeMatrix} autoComplete="off" value={tmpMatrix[i][j]}/></span>)
             }
-            arr.push(<div style={{margin:'5px'}}></div>)
+            arr.push(<span className="content-point-check-column"><Checkbox name={"checkbox_"+i} onChange={this.onChangeCheckBoxPoint} checked={this.state.checkBox[i]}/></span> )
+            arr.push(<div className="content-point-input-row"></div>)
         }
         return(arr);
     }
@@ -172,58 +202,56 @@ class Lagrange extends React.Component{
     componentDidMount() {
         const calculator = Desmos.getDesmosInstance();
         this.setState({ desmosInstance: calculator });
+        this.props.setKeys(['15'])
     }
     
 
     render(){
         return(
-            <div className="site-layout-background">
-                <h1 className="header-content">Lagrange Interpolation</h1>
+            <div className="content-layout-background">
+                <h1 className="content-header">Lagrange Interpolation</h1>
 
                 {/* ปุ่ม - + */}
-                <div style={{marginBottom:'10px'}}> 
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickMinus}>-</Button></span>
-                    <span style={{marginLeft:'10px', fontSize:'20px'}}>{this.state.n}</span>
-                    <span style={{marginLeft:'10px'}}><Button type="primary" onClick={this.onClickPlus}>+</Button></span>
+                <div className="content-plus-minus-line"> 
+                    <span className="content-plus-minus-button"><Button type="primary" onClick={this.onClickMinus}>-</Button></span>
+                    <span className="content-n-text">{this.state.n}</span>
+                    <span className="content-plus-minus-button"><Button type="primary" onClick={this.onClickPlus}>+</Button></span>
                 </div>
 
                 {/* เมตริกซ์ใส่ค่าข้อมูล */}
-                <div style={{display:'flex',flexFlow:'row'}}>
-                    <div style={{marginRight:'100px'}}>X</div>
-                    <div>Y</div>
+                <div className="content-matrix-area">
+                    <div className="content-point-text-column">X</div>
+                    <div className="content-point-text-column">Y</div>
+                    <div className="content-point-text-column">Use Point</div>
                 </div>
-                <div style={{display:'flex',flexFlow:'row'}}>
-                    <div style={{alignItems:'center'}}>{this.showMatrix()}</div>
-                    {/* <div style={{display:'flex', alignItems:'center', fontSize:'25px',marginLeft:'10px', marginRight:'10px'}}>X =</div>
-                    <div style={{alignItems:'center'}}>{this.matrix_X_show()}</div>
-                    <div style={{display:'flex', alignItems:'center', fontSize:'25px',marginLeft:'10px', marginRight:'10px'}}>b =</div>
-                    <div style={{alignItems:'center'}}>{this.matrix_B_show()}</div> */}
+                <div className="content-matrix-area">
+                    <div className="content-matrix-input-area">{this.showMatrix()}</div>
                 </div>
 
-                <div>
+                {/* <div>
                     จุดที่ต้องการใช้คำนวณ
                     <Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.onChangeSelectedPoint} value = {this.state.selectedPoint} autoComplete="off" />
+                </div> */}
+
+                <div className="content-attribute-input-matrix-line">
+                    <span className="content-text">จุด x ที่ต้องการหาผลลัพธ์</span>
+                    <span className="content-attribute-input"><Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.onChangeX} value = {this.state.x} autoComplete="off" /></span>
                 </div>
 
-                <div>
-                    จุด x ที่ต้องการหาผลลัพธ์
-                    <Input style={{width:'100px',textAlign:'center', marginLeft:'10px'}} onChange={this.onChangeX} value = {this.state.x} autoComplete="off" />
-                </div>
-
-                <div style={{marginTop:'10px'}}>
+                <div className="content-example-button">
                     <span><Button type="primary" onClick={this.onClickExample}>Example</Button></span>
                 </div>
 
-                <div style={{marginTop:'10px', marginBottom:'10px'}}>
+                <div className="content-matrix-calculate-button">
                     <span><Button type="primary" onClick={this.onClickCalculation}>Calculation</Button></span>
                 </div>
 
                 {this.state.isCalculate ?
-                    <div style={{marginTop:'10px'}}>f({this.state.x}) = {this.state.ans['ans']}</div>
+                    <div className="content-text">f({this.state.x}) = {this.state.ans['ans']}</div>
                     : null
                 }
 
-                <div id="desmos-calculator" style={{ height: "600px" }} />
+                <div id="desmos-calculator" className={this.state.showDesmos} />
 
             </div>
         );

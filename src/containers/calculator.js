@@ -587,7 +587,7 @@ export function calLagrange(matrix, x, selectedPoint){
         let mulUp = 1
         let mulDown = 1
         for(let j=0;j<n;j++){
-            if(i!=j){
+            if(i!==j){
                 mulUp = math.multiply(math.subtract(math.bignumber(x), arrX[j]), mulUp)
                 mulDown = math.multiply(math.subtract(math.bignumber(arrX[i]), arrX[j]), mulDown)
             }

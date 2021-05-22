@@ -32,7 +32,7 @@ class SiderNav extends React.Component {
               </SubMenu>
               <SubMenu key="sub3" title="Interpolation">
                 <Menu.Item key="14">Newton Divide<Link to="/Newton-divide" /></Menu.Item>
-                <Menu.Item key="15">Lagrange<Link to="/lagrange" /></Menu.Item>
+                <Menu.Item key="15">Lagrange<Link to="/Lagrange" /></Menu.Item>
                 <Menu.Item key="16">Spline<Link to="/spline" /></Menu.Item>
               </SubMenu>
               <SubMenu key="sub4" title="Regression Equation">
