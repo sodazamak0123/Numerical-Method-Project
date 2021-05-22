@@ -224,17 +224,51 @@
   align-items: center;
 }
 
-.content-matrix-input-row{
+.content-matrix-input-row,
+.content-point-input-row{
   margin: 10px;
 }
 
-.content-matrix-input-column{
+.content-point-text-column{
   margin: 5px;
+  font-size: 30px;
+  width: 150px;
+  text-align: center;
+}
+
+.content-matrix-input-column,
+.content-point-input-column{
+  margin: 5px;
+}
+
+.content-point-check-column{
+  margin-left: 75px;
+}
+
+.content-point-check-column .ant-checkbox-inner::after{
+  width: 11.42857142px;
+  height: 18.28571428px;
+}
+
+.content-point-check-column .ant-checkbox-inner{
+  width: 30px;
+  height: 30px;
+}
+
+.content-point-check-column .ant-checkbox-checked .ant-checkbox-inner{
+  background-color: #743ede;
+  border: #743ede;
 }
 
 .content-matrix-input-column .ant-input{
   font-size: 18px;
   width: 60px;
+  text-align: center;
+}
+
+.content-point-input-column .ant-input{
+  font-size: 18px;
+  width: 150px;
   text-align: center;
 }
 

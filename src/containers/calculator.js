@@ -559,10 +559,10 @@ export function calNewtonDivide(matrix, x, selectedPoint){
     }
     let arrC = []
     let sum = math.bignumber(arrFx[0][0]);
-    arrC.push(sum.toFixed(20))
+    arrC.push(sum.toString()) //
     let C = math.bignumber(1);
     for(let i=0;i<n-1;i++){
-        arrC.push(arrFx[i+1][0].toFixed(20))
+        arrC.push(arrFx[i+1][0].toString()) //
         let temp = math.bignumber(x)
         temp = math.subtract(temp,arrX[i])
         C = math.multiply(C,temp)

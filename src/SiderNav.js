@@ -31,7 +31,7 @@ class SiderNav extends React.Component {
                 <Menu.Item key="13">Gauss-Seidel Method<Link to="/Gauss-seidel" /></Menu.Item>
               </SubMenu>
               <SubMenu key="sub3" title="Interpolation">
-                <Menu.Item key="14">Newton Divide<Link to="/newton-divide" /></Menu.Item>
+                <Menu.Item key="14">Newton Divide<Link to="/Newton-divide" /></Menu.Item>
                 <Menu.Item key="15">Lagrange<Link to="/lagrange" /></Menu.Item>
                 <Menu.Item key="16">Spline<Link to="/spline" /></Menu.Item>
               </SubMenu>

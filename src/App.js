@@ -65,7 +65,7 @@ class App extends React.Component {
                 <Route path="/Conjugate-gradient" render={() => <ConjugateGradient setKeys={this.setKeys} />} />
                 <Route path="/Jacobi" render={() => <Jacobi setKeys={this.setKeys} />} />
                 <Route path="/Gauss-seidel" render={() => <GaussSeidel setKeys={this.setKeys} />} />
-                <Route path="/newton-divide" component={NewtonDivide} />
+                <Route path="/Newton-divide" render={() => <NewtonDivide setKeys={this.setKeys} />} />
                 <Route path="/lagrange" component={Lagrange} />
                 <Route path="/spline" component={Spline} />
                 <Route path="/regression" component={Regression} />
