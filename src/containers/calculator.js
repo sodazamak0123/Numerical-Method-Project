@@ -628,6 +628,8 @@ export function calSpline(matrix, x){
 
     let spline = new Spline(xs, ys);
 
+    // console.log(spline.getNaturalKs(5))
+
     return spline.at(+x)
 
 }

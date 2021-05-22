@@ -18,7 +18,7 @@ import NewtonDivide from './components/NewtonDivide';
 import Lagrange from './components/Lagrange';
 import Spline from './components/Spline';
 import SwaggerDoc from './containers/SwaggerDoc';
-import Regression from './components/Regression';
+import PolynomialRegression from './components/PolynomialRegression';
 import ConjugateGradient from './components/ConjugateGradient';
 import Jacobi from './components/Jacobi';
 
@@ -67,8 +67,8 @@ class App extends React.Component {
                 <Route path="/Gauss-seidel" render={() => <GaussSeidel setKeys={this.setKeys} />} />
                 <Route path="/Newton-divide" render={() => <NewtonDivide setKeys={this.setKeys} />} />
                 <Route path="/Lagrange" render={() => <Lagrange setKeys={this.setKeys} />} />
-                <Route path="/spline" component={Spline} />
-                <Route path="/regression" component={Regression} />
+                <Route path="/Spline" render={() => <Spline setKeys={this.setKeys} />} />
+                <Route path="/Polynomial-regression" render={() => <PolynomialRegression setKeys={this.setKeys} />}  />
                 <Route path="/swagger" component={SwaggerDoc} />
               </Content>
             </Layout>
