@@ -69,7 +69,7 @@ class App extends React.Component {
                 <Route path="/Lagrange" render={() => <Lagrange setKeys={this.setKeys} />} />
                 <Route path="/Spline" render={() => <Spline setKeys={this.setKeys} />} />
                 <Route path="/Polynomial-regression" render={() => <PolynomialRegression setKeys={this.setKeys} />}  />
-                <Route path="/swagger" component={SwaggerDoc} />
+                <Route path="/Swagger" render={() => <SwaggerDoc setKeys={this.setKeys} />} />
               </Content>
             </Layout>
           </Layout>

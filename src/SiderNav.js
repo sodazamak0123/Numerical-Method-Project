@@ -38,7 +38,7 @@ class SiderNav extends React.Component {
               <SubMenu key="sub4" title="Regression Equation">
                 <Menu.Item key="17">Polynomial Regression<Link to="/Polynomial-regression" /></Menu.Item>
               </SubMenu>
-              <Menu.Item key="18">Swagger<Link to="/swagger" /></Menu.Item>
+              <Menu.Item key="19">Swagger<Link to="/Swagger" /></Menu.Item>
 
             </Menu>
       );

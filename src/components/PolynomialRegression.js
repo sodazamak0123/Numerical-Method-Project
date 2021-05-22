@@ -1,6 +1,6 @@
 import React from "react"
 import { Button, Input } from "antd"
-import { calRegression } from "../containers/calculator"
+import { calPolynomialRegression } from "../containers/calculator"
 import apis from "../containers/API"
 import Desmos from "../containers/Desmos"
 
@@ -119,14 +119,14 @@ class PolynomialRegression extends React.Component{
             }
         }
 
-        let tmpMatrixX = this.state.x.split(',')
+        // let tmpMatrixX = this.state.x.split(',')
 
-        for(let i=0;i<this.state.m;i++){
-            tmpMatrixX[i] = +tmpMatrixX[i]
-        }
+        // for(let i=0;i<this.state.m;i++){
+        //     tmpMatrixX[i] = +tmpMatrixX[i]
+        // }
 
 
-        let tmpAns = calRegression(tmpMatrix, tmpMatrixX, +this.state.k, +this.state.m)
+        let tmpAns = calPolynomialRegression(tmpMatrix, +this.state.x, +this.state.k, +this.state.m)
 
         equation = equation + tmpAns['C'][0] + "+" 
 

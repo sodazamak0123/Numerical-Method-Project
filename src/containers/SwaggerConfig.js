@@ -13,6 +13,15 @@ const config = {
                     "API"
                 ],
                 "summary": "ค้นหาโจทย์ทั้งหมดในเรื่อง Root of Equation",
+                "parameters":[
+                    {
+                        "name": "equation",
+                        "in": "query",
+                        "description": "สมการของโจทย์ ",
+                        "type": "string",
+                        "format": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description" : "ทำงานสำเร็จ"

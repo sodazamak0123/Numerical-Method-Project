@@ -102,6 +102,15 @@ export function calFalsePosition(initEquation, initXL, initXR, initError){
     return {data, pointXL, pointXR}
 }
 
+export function checkEinText(text){
+    if(text.includes('e')){
+        let tmpText = text.split('e')
+        return tmpText[0] + "*10^{" + tmpText[1] + "}"
+    }else{
+        return text
+    }
+}
+
 export function calOnePoint(initEquation, initX, initError){
     let equation = math.parse(initEquation).compile()
     let x = math.bignumber(initX)
@@ -116,10 +125,10 @@ export function calOnePoint(initEquation, initX, initError){
     while (math.larger(checkError, error)) {
 
         newX = math.bignumber(equation.evaluate({x:math.bignumber(x)}))
-        pointX.push(x.toString())
-        pointY.push(newX.toString())
-        pointX.push(newX.toString())
-        pointY.push(newX.toString())
+        pointX.push(checkEinText(x.toString()))
+        pointY.push(checkEinText(newX.toString()))
+        pointX.push(checkEinText(newX.toString()))
+        pointY.push(checkEinText(newX.toString()))
         let newCheckError = math.abs(math.divide(math.subtract(newX, x), newX))
         if(iteration > 500 || (iteration > 5 && math.equal(checkError, 1))){
             data = []
@@ -635,7 +644,7 @@ export function calSpline(matrix, x){
 }
 
 
-export function calRegression(matrix, matrixX, k, m){
+export function calPolynomialRegression(matrix, x, k, m){
 
     let d = (k*m)+1
     let patternM = []
@@ -688,7 +697,7 @@ export function calRegression(matrix, matrixX, k, m){
     let sum = matrixC[0]
 
     for(let i=1;i<matrixC.length;i++){
-        sum = sum + (matrixC[i]*(matrixX[(i-1)%m]**i))
+        sum = sum + (matrixC[i]*(x**i))
     }
     
     for(let i=0;i<matrixC.length;i++){
