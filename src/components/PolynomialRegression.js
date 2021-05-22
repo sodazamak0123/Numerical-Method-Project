@@ -8,7 +8,6 @@ class PolynomialRegression extends React.Component{
 
     state = {
         n : 2,
-        m: 1,
         k: 1,
         matrix : [[],[]],
         x : null,
@@ -126,7 +125,7 @@ class PolynomialRegression extends React.Component{
         // }
 
 
-        let tmpAns = calPolynomialRegression(tmpMatrix, +this.state.x, +this.state.k, +this.state.m)
+        let tmpAns = calPolynomialRegression(tmpMatrix, +this.state.x, +this.state.k)
 
         equation = equation + tmpAns['C'][0] + "+" 
 

@@ -644,9 +644,9 @@ export function calSpline(matrix, x){
 }
 
 
-export function calPolynomialRegression(matrix, x, k, m){
+export function calPolynomialRegression(matrix, x, k){
 
-    let d = (k*m)+1
+    let d = k+1
     let patternM = []
 
     for(let i=0;i<d;i++){
@@ -656,24 +656,19 @@ export function calPolynomialRegression(matrix, x, k, m){
                 patternM[i][j] = matrix.length
             }
             else if(i==0&&j==d){
-                patternM[i][j] = sumSingle(matrix, m, 1, matrix.length)
+                patternM[i][j] = sumSingle(matrix, 1, 1, matrix.length)
             }
             else if(i==0){
-                let degreex = parseInt(j)
-                console.log(degreex)
-                patternM[i][j] = sumSingle(matrix, (j-1)%m, degreex, matrix.length)
+                patternM[i][j] = sumSingle(matrix, 0, j, matrix.length)
             }
             else if(i>j){
                 patternM[i][j] = patternM[j][i]
             }
             else if(j==d){
-                let degreex = parseInt(i)
-                patternM[i][j] = sumMulti(matrix, (i-1)%m, degreex, m, 1, matrix.length)
+                patternM[i][j] = sumMulti(matrix, 0, i, 1, 1, matrix.length)
             }
             else{
-                let degreex = parseInt(i)
-                let degreey = parseInt(j)
-                patternM[i][j] = sumMulti(matrix, (i-1)%m, degreex, (j-1)%m, degreey, matrix.length)
+                patternM[i][j] = sumMulti(matrix, 0, i, 0, j, matrix.length)
             }
         }
     
