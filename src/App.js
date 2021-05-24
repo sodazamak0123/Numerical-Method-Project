@@ -21,6 +21,7 @@ import SwaggerDoc from './containers/SwaggerDoc';
 import PolynomialRegression from './components/PolynomialRegression';
 import ConjugateGradient from './components/ConjugateGradient';
 import Jacobi from './components/Jacobi';
+import MultiLinearRegression from './components/MultiLinearRegression';
 
 const { Header, Content, Sider } = Layout;
 
@@ -69,6 +70,7 @@ class App extends React.Component {
                 <Route path="/Lagrange" render={() => <Lagrange setKeys={this.setKeys} />} />
                 <Route path="/Spline" render={() => <Spline setKeys={this.setKeys} />} />
                 <Route path="/Polynomial-regression" render={() => <PolynomialRegression setKeys={this.setKeys} />}  />
+                <Route path="/Multiple-linear-regression" render={() => <MultiLinearRegression setKeys={this.setKeys} />}  />
                 <Route path="/Swagger" render={() => <SwaggerDoc setKeys={this.setKeys} />} />
               </Content>
             </Layout>

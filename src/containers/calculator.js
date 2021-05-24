@@ -615,10 +615,26 @@ function sumMulti(arr,x,n,y,m,size){
     return sum
 }
 
+function sumMulti2D1D(arr2D,x,n,arr1D,m,size){
+    let sum = 0
+    for(let i = 0;i<size;i++){
+        sum = sum + ((arr2D[i][x]**n)*(arr1D[i]**m))
+    }
+    return sum
+}
+
 function sumSingle(arr,x,n,size){
     let sum = 0
     for(let i = 0;i<size;i++){
         sum = sum + (arr[i][x]**n)
+    }
+    return sum
+}
+
+function sumSingle1D(arr,n,size){
+    let sum = 0
+    for(let i = 0;i<size;i++){
+        sum = sum + (arr[i]**n)
     }
     return sum
 }
@@ -683,8 +699,8 @@ export function calPolynomialRegression(matrix, x, k){
         matrixB[i] = patternM[i][patternM[0].length-1]
     }
 
-    console.log(matrixA)
-    console.log(patternM)
+    // console.log(matrixA)
+    // console.log(patternM)
 
     let invMatrixA = math.inv(matrixA)
     let matrixC = math.multiply(invMatrixA, matrixB)
@@ -701,6 +717,57 @@ export function calPolynomialRegression(matrix, x, k){
  
     console.log(matrixC)
     return {ans: sum.toString(), C: matrixC}
+
+}
+
+export function calMultiLinearRegression(matrixX, matrixY, ansX, m){
+
+    let d = m+1
+    let patternMatrixA = []
+    let patternMatrixB = []
+
+    console.log('debug')
+    for(let i=0;i<d;i++){
+        patternMatrixA.push([])
+        for(let j=0;j<d+1;j++){
+            if(i==0&&j==0){
+                patternMatrixA[i][j] = matrixX.length
+            }
+            else if(i==0&&j==d){
+                patternMatrixB[i] = sumSingle1D(matrixY, 1, matrixY.length)
+            }
+            else if(i==0){
+                patternMatrixA[i][j] = sumSingle(matrixX, (j-1), 1, matrixX.length)
+            }
+            else if(i>j){
+                patternMatrixA[i][j] = patternMatrixA[j][i]
+            }
+            else if(j==d){
+                patternMatrixB[i] = sumMulti2D1D(matrixX, (i-1), 1, matrixY, 1, matrixX.length)
+            }
+            else{
+                patternMatrixA[i][j] = sumMulti(matrixX, (i-1), 1, (j-1), 1, matrixX.length)
+            }
+        }
+
+    }
+
+    // console.log(patternMatrixA)
+    // console.log(patternMatrixB)
+
+    let invMatrixA = math.inv(patternMatrixA)
+    let matrixC = math.multiply(invMatrixA, patternMatrixB)
+
+    let sum = matrixC[0]
+
+    for(let i=1;i<matrixC.length;i++){
+        sum = sum + matrixC[i]*ansX[i-1]
+        console.log(sum)
+    }
+
+    console.log(matrixC)
+
+    return sum.toString()
 
 }
 

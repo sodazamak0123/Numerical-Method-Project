@@ -2,6 +2,7 @@ const axios = require('axios')
 
 const api = axios.create({
     baseURL : "https://my-json-server.typicode.com/sodazamak0123/Numerical-Method-Project/"
+    // baseURL : "http://localhost:3001/"
 })
 
 const getAllRootOfEquation = () => api.get("/root-of-equation")
