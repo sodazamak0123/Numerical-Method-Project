@@ -24,10 +24,11 @@ class MultiLinearRegression extends React.Component{
         await apis.getAllRegression().then(res => {tempData = res.data})
         this.setState({apiData:tempData})
         this.setState({
-            n: this.state.apiData[0]["n"],
-            matrix : this.state.apiData[0]["matrix"],
-            selectedPoint : this.state.apiData[0]["selectedPoint"],
-            x : ""+this.state.apiData[0]["x"],
+            n: this.state.apiData[1]["n"],
+            m: this.state.apiData[1]["m"],
+            matrixX : this.state.apiData[1]["matrixX"],
+            matrixY : this.state.apiData[1]["matrixY"],
+            ansX : this.state.apiData[1]["x"],
         })
     }
 
