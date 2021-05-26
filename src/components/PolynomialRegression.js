@@ -49,7 +49,7 @@ class PolynomialRegression extends React.Component{
     }
 
     onClickPlusN = e =>{
-        if(this.state.n<9){
+        if(this.state.n<15){
             let tmpMatrix = this.state.matrix
             tmpMatrix.push([])
             this.setState({

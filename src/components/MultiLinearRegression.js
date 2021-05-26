@@ -64,10 +64,13 @@ class MultiLinearRegression extends React.Component{
     onClickMinusM = e =>{
         if(this.state.m>2){
             let tmpMatrixX = this.state.matrixX
+            let tmpAnsX = this.state.ansX
             tmpMatrixX.map(x => {x.pop()})
+            tmpAnsX.pop()
             this.setState({
                 m : this.state.m-1,  
-                matrixX : tmpMatrixX
+                matrixX : tmpMatrixX,
+                ansX : tmpAnsX
             })
         }
     }
@@ -75,10 +78,13 @@ class MultiLinearRegression extends React.Component{
     onClickPlusM = e =>{
         if(this.state.m<6){
             let tmpMatrixX = this.state.matrixX
+            let tmpAnsX = this.state.ansX
             tmpMatrixX.map(x => {x.push(null)})
+            tmpAnsX.push(null)
             this.setState({
                 m : this.state.m+1,
-                matrixX : tmpMatrixX
+                matrixX : tmpMatrixX,
+                ansX : tmpAnsX
             })
         } 
     }
@@ -184,9 +190,30 @@ class MultiLinearRegression extends React.Component{
         let tmpAnsX = this.state.ansX
 
         for(let i=0;i<this.state.m;i++){
-            arr.push(<span className="content-attribute-input"><Input style={{marginLeft:'5px', textAlign:'center'}} name={i.toString()} onChange={this.onChangeX} value = {this.state.x} placeholder={"X"+(i+1)} autoComplete="off" /></span>)
+            arr.push(<span className="content-attribute-input"><Input style={{marginLeft:'5px', textAlign:'center'}} name={i.toString()} onChange={this.onChangeX} value = {this.state.ansX[i]} placeholder={"X"+(i+1)} autoComplete="off" /></span>)
         }
         return arr
+    }
+
+    showX(){
+        let arr = []
+        let tmpAnsX = this.state.ansX
+
+        for(let i=0;i<this.state.m;i++){
+            arr.push(<span className="content-attribute-input"><Input style={{marginLeft:'5px', textAlign:'center'}} name={i.toString()} onChange={this.onChangeX} value = {this.state.ansX[i]} placeholder={"X"+(i+1)} autoComplete="off" /></span>)
+        }
+        return arr
+    }
+
+    showFX(){
+        let text = ""
+        let tmpAnsX = this.state.ansX
+
+        tmpAnsX.map(x => {text=text+x+","})
+        
+        text = text.slice(0,text.length-1)
+
+        return text
     }
 
     componentDidMount() {
@@ -238,7 +265,7 @@ class MultiLinearRegression extends React.Component{
                 </div>
 
                 {this.state.isCalculate ?
-                    <div className="content-text">f({this.state.x}) = {this.state.ans}</div>
+                    <div className="content-text">f({this.showFX()}) = {this.state.ans}</div>
                     : null
                 }
 

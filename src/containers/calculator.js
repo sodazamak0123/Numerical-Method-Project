@@ -608,33 +608,37 @@ export function calLagrange(matrix, x, selectedPoint){
 }
 
 function sumMulti(arr,x,n,y,m,size){
-    let sum = 0
+    let sum = math.bignumber(0)
     for(let i = 0;i<size;i++){
-        sum = sum + ((arr[i][x]**n)*(arr[i][y]**m))
+        // sum = sum + ((arr[i][x]**n)*(arr[i][y]**m))
+        sum = math.add(sum, math.multiply(math.pow(math.bignumber(arr[i][x]), n), math.pow(math.bignumber(arr[i][y]), m)))
     }
     return sum
 }
 
 function sumMulti2D1D(arr2D,x,n,arr1D,m,size){
-    let sum = 0
+    let sum = math.bignumber(0)
     for(let i = 0;i<size;i++){
-        sum = sum + ((arr2D[i][x]**n)*(arr1D[i]**m))
+        // sum = sum + ((arr2D[i][x]**n)*(arr1D[i]**m))
+        sum = math.add(sum, math.multiply(math.pow(math.bignumber(arr2D[i][x]), n), math.pow(math.bignumber(arr1D[i]), m)))
     }
     return sum
 }
 
 function sumSingle(arr,x,n,size){
-    let sum = 0
+    let sum = math.bignumber(0)
     for(let i = 0;i<size;i++){
-        sum = sum + (arr[i][x]**n)
+        // sum = sum + (arr[i][x]**n)
+        sum = math.add(sum, math.pow(math.bignumber(arr[i][x]), n))
     }
     return sum
 }
 
 function sumSingle1D(arr,n,size){
-    let sum = 0
+    let sum = math.bignumber(0)
     for(let i = 0;i<size;i++){
-        sum = sum + (arr[i]**n)
+        // sum = sum + (arr[i]**n)
+        sum = math.add(sum, math.pow(math.bignumber(arr[i]), n))
     }
     return sum
 }
@@ -708,7 +712,8 @@ export function calPolynomialRegression(matrix, x, k){
     let sum = matrixC[0]
 
     for(let i=1;i<matrixC.length;i++){
-        sum = sum + (matrixC[i]*(x**i))
+        // sum = sum + (matrixC[i]*(x**i))
+        sum = math.add(sum, math.multiply(matrixC[i], math.pow(math.bignumber(x),i)))
     }
     
     for(let i=0;i<matrixC.length;i++){
@@ -731,22 +736,22 @@ export function calMultiLinearRegression(matrixX, matrixY, ansX, m){
         patternMatrixA.push([])
         for(let j=0;j<d+1;j++){
             if(i==0&&j==0){
-                patternMatrixA[i][j] = matrixX.length
+                patternMatrixA[i][j] = math.bignumber(matrixX.length)
             }
             else if(i==0&&j==d){
-                patternMatrixB[i] = sumSingle1D(matrixY, 1, matrixY.length)
+                patternMatrixB[i] = math.bignumber(sumSingle1D(matrixY, 1, matrixY.length))
             }
             else if(i==0){
-                patternMatrixA[i][j] = sumSingle(matrixX, (j-1), 1, matrixX.length)
+                patternMatrixA[i][j] = math.bignumber(sumSingle(matrixX, (j-1), 1, matrixX.length))
             }
             else if(i>j){
                 patternMatrixA[i][j] = patternMatrixA[j][i]
             }
             else if(j==d){
-                patternMatrixB[i] = sumMulti2D1D(matrixX, (i-1), 1, matrixY, 1, matrixX.length)
+                patternMatrixB[i] = math.bignumber(sumMulti2D1D(matrixX, (i-1), 1, matrixY, 1, matrixX.length))
             }
             else{
-                patternMatrixA[i][j] = sumMulti(matrixX, (i-1), 1, (j-1), 1, matrixX.length)
+                patternMatrixA[i][j] = math.bignumber(sumMulti(matrixX, (i-1), 1, (j-1), 1, matrixX.length))
             }
         }
 
@@ -760,14 +765,15 @@ export function calMultiLinearRegression(matrixX, matrixY, ansX, m){
 
     let sum = matrixC[0]
 
+    console.log(matrixC)
+
     for(let i=1;i<matrixC.length;i++){
-        sum = sum + matrixC[i]*ansX[i-1]
+        sum = math.add(sum, math.multiply(matrixC[i], math.bignumber(ansX[i-1])))
         console.log(sum)
     }
 
-    console.log(matrixC)
+    console.log(math.round(sum,15).toString())
 
-    return sum.toString()
+    return math.round(sum,15).toString()
 
 }
-
